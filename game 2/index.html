@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Duck Hunt: Ultra Edition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game-ui">
+    <div id="header">
+      <h1>🦆 Duck Hunt: Ultra Edition</h1>
+      <div id="difficulty-selector">
+        <label>Difficulty:</label>
+        <select id="difficulty">
+          <option value="0">Extra Easy</option>
+          <option value="1">Easy</option>
+          <option value="2" selected>Medium</option>
+          <option value="3">Hard</option>
+          <option value="4">Extra Hard</option>
+        </select>
+      </div>
+    </div>
+    <div id="score-health">
+      <div id="score">Score: 0</div>
+      <div id="health-bar">
+        <div id="health-inner"></div>
+        <span id="health-text">Chances: 5</span>
+      </div>
+    </div>
+  </div>
+  <canvas id="game-canvas"></canvas>
+  <div id="game-over" class="hidden">
+    <h2>Game Over!</h2>
+    <p id="final-score"></p>
+    <button id="restart-btn">Restart</button>
+    <div id="leaderboard">
+      <h3>Leaderboard</h3>
+      <ol id="high-scores"></ol>
+    </div>
+  </div>
+  <audio id="shoot-sound" src="shoot.mp3" preload="auto"></audio>
+  <audio id="hit-sound" src="hit.mp3" preload="auto"></audio>
+  <audio id="miss-sound" src="miss.mp3" preload="auto"></audio>
+  <script src="game.js"></script>
+</body>
+</html>

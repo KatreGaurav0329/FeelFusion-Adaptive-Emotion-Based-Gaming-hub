@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pro Car Racing Game</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div id="mainMenu" class="overlay">
+    <div class="menu-content">
+      <h1>🚗 Pro Car Racing</h1>
+      <button id="startBtn">Start Game</button>
+      <div class="difficulty">
+        <label for="mode">Mode:</label>
+        <select id="mode">
+          <option value="extraeasy">Extra Easy</option>
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+          <option value="extrahard">Extra Hard</option>
+        </select>
+      </div>
+      <div class="camera">
+        <label for="cameraAngle">Camera:</label>
+        <select id="cameraAngle">
+          <option value="classic">Classic</option>
+          <option value="low">Low</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+      <p class="tip">Use ← → or A/D to steer. Space or Pause button to pause/resume.</p>
+    </div>
+  </div>
+  <div id="pauseMenu" class="overlay">
+    <div class="menu-content">
+      <h1>Paused</h1>
+      <button id="resumeBtn">Resume</button>
+      <button id="restartBtn2">Restart</button>
+    </div>
+  </div>
+  <div id="gameOverMenu" class="overlay">
+    <div class="menu-content">
+      <h1>Game Over</h1>
+      <p>Your Score: <span id="finalScore">0</span></p>
+      <button id="restartBtn">Restart</button>
+    </div>
+  </div>
+  <div class="hud">
+    <div class="score">Score: <span id="score">0</span></div>
+    <div class="chances">Chances: <span id="chances">3</span></div>
+    <button id="pauseBtn" title="Pause">&#10073;&#10073;</button>
+  </div>
+  <canvas id="gameCanvas" width="480" height="720"></canvas>
+  <script src="game.js"></script>
+</body>
+</html>

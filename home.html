@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Hub</title>
+  <link rel="stylesheet" href="homepage.css">
+</head>
+<body>
+  <div class="home-container">
+    <header>
+      <h1>🎮 Game Hub</h1>
+      <p>Select a game to play</p>
+    </header>
+    <div class="games-grid">
+      <div class="game-card" onclick="openGame('frontend_molegame.html')">
+        <img src="whackmole.png" alt="Whack-a-Mole">
+        <h2>Whack-a-Mole</h2>
+        <p>Test your reflexes in this classic game!</p>
+      </div>
+      <div class="game-card" onclick="openGame('frontend_cargame.html')">
+        <img src="cargame.jpeg" alt="car game">
+        <h2>car game</h2>
+        <p>Challenge your memory skills!</p>
+      </div>
+      <div class="game-card" onclick="openGame('frontend_duckgame.html')">
+        <img src="huntduck.jpeg" alt="Hunt the Duck">
+        <h2>Hunt the Duck</h2>
+        <p>Play the timeless game of X's and O's.</p>
+      </div>
+      <!-- Add more game cards as needed -->
+    </div>
+  </div>
+  <script>
+    function openGame(file) {
+      window.location.href = file;
+    }
+  </script>
+</body>
+</html>

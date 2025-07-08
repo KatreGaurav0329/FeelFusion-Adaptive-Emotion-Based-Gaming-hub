@@ -1,0 +1,119 @@
+html {
+  box-sizing: border-box;
+  font-size: 10px;
+  /* Emerging, handy UI background */
+  background: linear-gradient(135deg, #f7b733 0%, #fc4a1a 100%);
+  min-height: 100vh;
+  transition: background 0.7s;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Amatic SC", cursive;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+  font-size: 8rem;
+  line-height: 1;
+  margin-bottom: 0.5em;
+  color: #fff;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.13);
+}
+
+.score {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0 3rem;
+  line-height: 1;
+  border-radius: 1rem;
+  color: #222;
+}
+
+.controls {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.controls select, .controls button {
+  font-size: 2.2rem;
+  padding: 0.3em 1.2em;
+  border-radius: 1em;
+  border: none;
+  outline: none;
+  background: #fff;
+  color: #fc4a1a;
+  font-family: "Amatic SC", cursive;
+  font-weight: 700;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.09);
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.controls button:disabled {
+  background: #eee;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.game {
+  width: 600px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.13);
+  border-radius: 2.5rem;
+  box-shadow: 0 4px 32px rgba(252,74,26,0.13);
+  padding: 2rem;
+}
+
+.hole {
+  flex: 1 0 33.33%;
+  overflow: hidden;
+  position: relative;
+}
+
+.hole:after {
+  display: block;
+  background: url("./dirt.svg") bottom center no-repeat;
+  background-size: contain;
+  content: "";
+  width: 100%;
+  height: 70px;
+  position: absolute;
+  z-index: 2;
+  bottom: -30px;
+}
+
+.mole {
+  background: url("./mole.svg") bottom center no-repeat;
+  background-size: 60%;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  height: 100%;
+  transition: all 0.4s cubic-bezier(.62,.28,.23,.99);
+}
+
+.hole.up .mole {
+  top: 0;
+}
+
+@media (max-width: 700px) {
+  .game { width: 98vw; height: 60vw; padding: 1rem;}
+  h1 { font-size: 4rem; }
+  .controls select, .controls button { font-size: 1.2rem; }
+}

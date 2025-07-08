@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whack-a-Mole Premium</title>
+  <link rel="stylesheet" href="frontend.css">
+</head>
+<body>
+
+    <div class="apple-buttons">
+  <span class="btn red"></span>
+  <span class="btn yellow"></span>
+  <span class="btn green"></span>
+</div>
+
+
+  <div class="container">
+    <aside class="sidebar">
+      <div class="camera-window">
+        <video id="player" autoplay playsinline></video>
+      </div>
+      <div class="emotion-label" id="emotionLabel">Happy</div>
+      <div class="toggle-section">
+        <span>Live Video Feed of player</span>
+        <label class="switch">
+          <input type="checkbox" id="cameraToggle" checked>
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </aside>
+    <main class="game-area">
+      <!-- Insert your Whack-a-Mole game here -->
+      <iframe src="final game copy 2\index.html" class="game-frame"></iframe>
+    </main>
+  </div>
+  <script src="frontend.js"></script>
+</body>
+</html>
