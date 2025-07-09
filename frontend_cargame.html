@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Whack-a-Mole Premium</title>
   <link rel="stylesheet" href="frontend.css">
+  <script defer src="face-api.min.js"></script>
+  <script src="frontend.js"></script>
 </head>
 <body>
 
@@ -18,7 +20,7 @@
   <div class="container">
     <aside class="sidebar">
       <div class="camera-window">
-        <video id="player" autoplay playsinline></video>
+        <video id="player" autoplay playsinline muted></video>
       </div>
       <div class="emotion-label" id="emotionLabel">Happy</div>
       <div class="toggle-section">
@@ -34,6 +36,6 @@
       <iframe src="game 4\index.html" class="game-frame"></iframe>
     </main>
   </div>
-  <script src="frontend.js"></script>
+  
 </body>
 </html>

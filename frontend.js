@@ -4,19 +4,24 @@ const video = document.getElementById('player');
 const cameraToggle = document.getElementById('cameraToggle');
 const emotionLabel = document.getElementById('emotionLabel');
 
+
+// Load FaceAPI models
+Promise.all([
+  faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+  faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+  faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+  faceapi.nets.faceExpressionNet.loadFromUri('/models')
+]).then(startCamera);
+
 let stream = null;
 
 // Start camera
-async function startCamera() {
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-    video.srcObject = stream;
-    video.play();
-    // Optionally, start emotion detection here
-    detectEmotion();
-  } catch (err) {
-    alert('Unable to access camera: ' + err.message);
-  }
+function startCamera() {
+  navigator.mediaDevices.getUserMedia({ video: {} })
+    .then(stream => {
+      video.srcObject = stream;
+    })
+    .catch(err => console.error(err));
 }
 
 // Stop camera
