@@ -1,0 +1,219 @@
+
+  /* === Reset & base === */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  html, body {
+    margin: 0; padding: 0; min-height: 100vh;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background: linear-gradient(135deg, #d3e7ff 0%, #fffafa 100%);
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  a:hover, a:focus {
+    text-decoration: underline;
+  }
+  /* === Container === */
+  .container {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2vw 3vw 5vw 3vw;
+    display: flex;
+    flex-direction: column;
+    gap: 2.8rem;
+  }
+  /* === Sticky header === */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255 255 255 / 0.55);
+    backdrop-filter: saturate(180%) blur(14px);
+    box-shadow: 0 2px 11px rgb(80 104 136 / 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 2.5rem 0.9rem 2rem;
+    border-radius: 0 0 26px 26px;
+    user-select: none;
+  }
+  header .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+  header .logo-area img {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px #a4cef748;
+    object-fit: contain;
+  }
+  header h1 {
+    font-family: 'Amatic SC', cursive;
+    font-size: 2.8rem;
+    color: #0d3ddc;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    user-select: none;
+  }
+  nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0; padding: 0;
+    gap: 1.8rem;
+  }
+  nav li {
+    padding: 0.22rem .37rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #1e345d;
+    user-select: none;
+    position: relative;
+    border-radius: 5px;
+  }
+  nav li:hover,
+  nav li:focus-within,
+  nav li.active {
+    background: #cee2ff;
+    color: #0d3ddc;
+  }
+  nav li > a {
+    display: block;
+    outline-offset: 3px;
+  }
+  nav li > a:focus-visible {
+    outline: 3px solid #0d3ddc;
+    border-radius: 6px;
+  }
+  /* === Featured Games Section === */
+  section#games-gallery {
+    display: grid;
+    gap: 2.8rem 2.7rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    user-select: none;
+  }
+  .game-card {
+    background: rgba(255 255 255 / 0.35);
+    border-radius: 24px;
+    box-shadow: 0 6px 28px rgb(100 120 255 / 0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 1.9rem 1.7rem;
+    transition: box-shadow 0.28s ease;
+    cursor: pointer;
+    backdrop-filter: saturate(180%) blur(12px);
+    border: 1px solid transparent;
+  }
+  .game-card:hover, .game-card:focus-within {
+    box-shadow: 0 8px 34px rgb(110 140 255 / 0.32);
+    border-color: #4366c9;
+  }
+  .game-icon {
+    font-size: 4.8rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    line-height: 1;
+    user-select: none;
+  }
+  .game-title {
+    font-family: 'Amatic SC', cursive;
+    font-weight: 700;
+    font-size: 2.6rem;
+    color: #1f3fac;
+    margin: 0 0 0.35rem 0;
+    text-align: center;
+  }
+  .game-desc {
+    font-size: 1.11rem;
+    font-weight: 500;
+    color: #34518a;
+    flex-grow: 1;
+    user-select: none;
+    text-align:center;
+    margin-bottom: 1.4rem;
+  }
+  .btn-play {
+    font-weight: 700;
+    font-size: 1.17rem;
+    background: linear-gradient(90deg,#fbd4ee 0%, #cbf1ff 100%);
+    padding: 0.55em 1.4em;
+    border: none;
+    border-radius: 15px;
+    color: #263f7c;
+    box-shadow: 0 4px 16px rgb(52 97 255 / 0.4);
+    user-select: none;
+    transition: all 0.18s ease;
+    text-align: center;
+  }
+  .btn-play:hover, .btn-play:focus {
+    background: linear-gradient(90deg,#ca9cd6 0%, #89d2ff 100%);
+    color: #0e2e97;
+  }
+  /* === Info Section === */
+  section#info {
+    margin-top: 2.4rem;
+    background: rgba(255 255 255 / 0.41);
+    border-radius: 26px;
+    padding: 2.3rem 2.5rem;
+    box-shadow: 0 6px 24px rgb(80 95 200 / 0.12);
+    font-size: 1.12rem;
+    line-height: 1.55;
+    color: #1565a8;
+    user-select: none;
+  }
+  section#info h2 {
+    font-family: 'Amatic SC', cursive;
+    font-weight: 700;
+    font-size: 2.7rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #2051a3;
+  }
+  section#info ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  section#info ul li {
+    margin-bottom: 0.68rem;
+    padding-left: 1.4rem;
+    position: relative;
+    font-weight: 600;
+  }
+  section#info ul li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    top: 0.05rem;
+    color: #0d3bd7;
+    font-weight: 700;
+  }
+  /* === Footer === */
+  footer {
+    font-size: 0.92rem;
+    color: #213868;
+    text-align: center;
+    padding: 1.3rem 1rem 1.3rem 1rem;
+    margin-top: auto;
+    user-select: none;
+    background: rgba(255 255 255 / 0.3);
+    backdrop-filter: saturate(180%) blur(10px);
+    box-shadow: 0 -1px 12px rgb(40 70 130 / 0.15);
+    font-weight: 500;
+  }
