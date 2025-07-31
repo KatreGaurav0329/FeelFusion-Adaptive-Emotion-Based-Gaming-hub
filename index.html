@@ -35,36 +35,36 @@
       <article class="game-card" tabindex="0" role="button" aria-label="Play Whack-a-Mole game" onclick="launchGame('whack')">
         <div class="game-icon" aria-hidden="true">🐹</div>
         <h3 class="game-title">Whack-a-Mole</h3>
-        <p class="game-desc">Classic reflex game</p>
+        <p class="game-desc">Whack them All</p>
         <button class="btn-play" type="button" onclick="launchGame('whack'); event.stopPropagation();">Play Now</button>
       </article>
 
-      <article class="game-card" tabindex="0" role="button" aria-label="Play Balloon Dodge game" onclick="launchGame('balloon')">
-        <div class="game-icon" aria-hidden="true">🎈</div>
-        <h3 class="game-title">Balloon Dodge</h3>
-        <p class="game-desc">Avoid floating obstacles</p>
-        <button class="btn-play" type="button" onclick="launchGame('balloon'); event.stopPropagation();">Play Now</button>
+      <article class="game-card" tabindex="0" role="button" aria-label="Play Flappy Bird" onclick="launchGame('FlappyBird')">
+        <div class="game-icon" aria-hidden="true">🐤</div>
+        <h3 class="game-title">Flappy Bird</h3>
+        <p class="game-desc"> Fly through the pipes</p>
+        <button class="btn-play" type="button" onclick="launchGame('Flappy Bird'); event.stopPropagation();">Play Now</button>
       </article>
 
-      <article class="game-card" tabindex="0" role="button" aria-label="Play Asteroid Dodge game" onclick="launchGame('asteroid')">
-        <div class="game-icon" aria-hidden="true">☄️</div>
-        <h3 class="game-title">Asteroid Dodge</h3>
-        <p class="game-desc">Navigate through asteroid fields</p>
-        <button class="btn-play" type="button" onclick="launchGame('asteroid'); event.stopPropagation();">Play Now</button>
+      <article class="game-card" tabindex="0" role="button" aria-label="Play Space shooter game" onclick="launchGame('SpaceShooter')">
+        <div class="game-icon" aria-hidden="true"> 👾</div>
+        <h3 class="game-title">Space Shooter</h3>
+        <p class="game-desc">Shoot the Aliens</p>
+        <button class="btn-play" type="button" onclick="launchGame('Space Shooter'); event.stopPropagation();">Play Now</button>
       </article>
 
-      <article class="game-card" tabindex="0" role="button" aria-label="Play Car Hurdle Dodge game" onclick="launchGame('carhurdle')">
+      <article class="game-card" tabindex="0" role="button" aria-label="Play Car Traffic Dodge game" onclick="launchGame('carTrafficDodge')">
         <div class="game-icon" aria-hidden="true">🚗</div>
-        <h3 class="game-title">Car Hurdle Dodge</h3>
-        <p class="game-desc">Jump over road hurdles</p>
-        <button class="btn-play" type="button" onclick="launchGame('carhurdle'); event.stopPropagation();">Play Now</button>
+        <h3 class="game-title"> Car Traffic Dodge</h3>
+        <p class="game-desc">Dodge the oncoming traffic</p>
+        <button class="btn-play" type="button" onclick="launchGame('carTrafficDodge'); event.stopPropagation();">Play Now</button>
       </article>
 
-      <article class="game-card" tabindex="0" role="button" aria-label="Play Stack the Tower game" onclick="launchGame('stacktower')">
-        <div class="game-icon" aria-hidden="true">🧱</div>
-        <h3 class="game-title">Stack the Tower</h3>
-        <p class="game-desc">Time your blocks perfectly</p>
-        <button class="btn-play" type="button" onclick="launchGame('stacktower'); event.stopPropagation();">Play Now</button>
+      <article class="game-card" tabindex="0" role="button" aria-label="Play Fruit NNinja" onclick="launchGame('Fruit Ninja')">
+        <div class="game-icon" aria-hidden="true">🍉</div>
+        <h3 class="game-title">Fruit Ninja</h3>
+        <p class="game-desc">Slice fruits with precision</p>
+        <button class="btn-play" type="button" onclick="launchGame('Fruit Ninja'); event.stopPropagation();">Play Now</button>
       </article>
 
       <article class="game-card" tabindex="0" role="button" aria-label="Play Emoji Memory Match game" onclick="launchGame('memorymatch')">
@@ -72,6 +72,20 @@
         <h3 class="game-title">Emoji Memory Match</h3>
         <p class="game-desc">Train your brain with matches</p>
         <button class="btn-play" type="button" onclick="launchGame('memorymatch'); event.stopPropagation();">Play Now</button>
+      </article>
+
+      <article class="game-card" tabindex="0" role="button" aria-label="Play Ping Pong game" onclick="launchGame('pingpong')">
+        <div class="game-icon" aria-hidden="true">🏓</div>
+        <h3 class="game-title">Ping Pong</h3>
+        <p class="game-desc">Keep the ball bouncing!</p>
+        <button class="btn-play" type="button" onclick="launchGame('pingpong'); event.stopPropagation();">Play Now</button>
+      </article>
+
+      <article class="game-card" tabindex="0" role="button" aria-label="Play Snake Game" onclick="launchGame('Snake')">
+        <div class="game-icon" aria-hidden="true">🐍</div>
+        <h3 class="game-title">Snake Game</h3>
+        <p class="game-desc">Guide the snake to eat the fruits</p>
+        <button class="btn-play" type="button" onclick="launchGame('Snake'); event.stopPropagation();">Play Now</button>
       </article>
     </section>
 
@@ -96,11 +110,8 @@
     function launchGame(gameId) {
       const urls = {
         whack:     "mole game/index.html",
-        balloon:   "Balloon.html",
-        asteroid:  "Astroid.html",
-        carhurdle: "Car Game/index.html",
-        stacktower:"Stack_tower.html",
-        memorymatch:"Emoji_match.html"
+        carhurdle: "",
+        memorymatch:""
       };
       if(urls[gameId]){
         window.open(urls[gameId], '_blank', 'noopener');
