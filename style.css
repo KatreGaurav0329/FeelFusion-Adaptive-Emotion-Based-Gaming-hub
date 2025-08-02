@@ -14,6 +14,24 @@
     scroll-behavior: smooth;
     overflow-x: hidden;
   }
+  body.dark-mode {
+    background: #181a20;
+    color: #e0e6f7;
+  }
+  body.dark-mode header,
+  body.dark-mode footer {
+    background: #23272f;
+    color: #e0e6f7;
+  }
+  body.dark-mode .game-card {
+    background: #23272f;
+    color: #e0e6f7;
+    border-color: #353b48;
+  }
+  body.dark-mode .btn-play {
+    background: #353b48;
+    color: #fff;
+  }
   body {
     display: flex;
     flex-direction: column;
@@ -57,12 +75,24 @@
     align-items: center;
     gap: 0.9rem;
   }
+  @keyframes logoFadeIn {
+  from { opacity: 0; transform: translateY(-20px);}
+  to   { opacity: 1; transform: translateY(0);}
+}
+.logo-area {
+  animation: logoFadeIn 0.8s cubic-bezier(.4,0,.2,1);
+}
   header .logo-area img {
     width: 52px; height: 52px;
     border-radius: 14px;
     box-shadow: 0 2px 12px #a4cef748;
     object-fit: contain;
   }
+  .logo-dark { display: none; }
+  .logo-light { display: inline; }
+
+  body.dark-mode .logo-light { display: none; }
+  body.dark-mode .logo-dark { display: inline; }
   header h1 {
     font-family: 'Amatic SC', cursive;
     font-size: 2.8rem;
@@ -88,6 +118,9 @@
     position: relative;
     border-radius: 5px;
   }
+  nav li {
+  transition: background 0.3s, color 0.3s;
+ }
   nav li:hover,
   nav li:focus-within,
   nav li.active {
@@ -121,10 +154,24 @@
     backdrop-filter: saturate(180%) blur(12px);
     border: 1px solid transparent;
   }
+  .game-card {
+  transition: box-shadow 0.28s, transform 0.28s;
+}
+.game-card:hover, .game-card:focus-within {
+  transform: scale(1.04);
+}
   .game-card:hover, .game-card:focus-within {
     box-shadow: 0 8px 34px rgb(110 140 255 / 0.32);
     border-color: #4366c9;
   }
+  @keyframes cardPulse {
+  0%   { box-shadow: 0 6px 28px rgb(100 120 255 / 0.15);}
+  50%  { box-shadow: 0 12px 40px rgb(100 120 255 / 0.25);}
+  100% { box-shadow: 0 6px 28px rgb(100 120 255 / 0.15);}
+}
+.game-card:hover, .game-card:focus-within {
+  animation: cardPulse 0.5s;
+}
   .game-icon {
     font-size: 4.8rem;
     text-align: center;
@@ -162,6 +209,11 @@
     transition: all 0.18s ease;
     text-align: center;
   }
+  .btn-play:active,
+#darkModeToggle:active {
+  transform: scale(0.96);
+  transition: transform 0.12s;
+}
   .btn-play:hover, .btn-play:focus {
     background: linear-gradient(90deg,#ca9cd6 0%, #89d2ff 100%);
     color: #0e2e97;
