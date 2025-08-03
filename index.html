@@ -1,103 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>FeelFusion – Adaptive Emotion Detection Game Hub</title>
-
-<!-- Fonts: Poppins + Amatic SC for Apple-like style -->
-<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
-<!-- Add this CSS in your <head> section, after other <link> tags -->
-
-  
-
-
-<!-- FontAwesome for icons -->
-<script src="https://kit.fontawesome.com/11ed3f2643.js" crossorigin="anonymous"></script>
-
-<link href="style.css" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FeelFusion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/11ed3f2643.js" crossorigin="anonymous"></script>
+  <link href="style.css" rel="stylesheet"/>
+  <script src="script.js"></script>
 </head>
 <body>
   <header>
-    <!--div class="logo-area">
-      <img src="FeelFusion.png" alt="FeelFusion logo" aria-hidden="true" />
-      <h1><b>FeelFusion-Adaptive Emotion Detection Game.</h1>
-    </div-->
     <div class="logo-area">
-  <img src="FeelFusion.png" alt="FeelFusion logo light" class="logo-light" aria-hidden="true" />
-  <img src="Web-based Project Logo FeelFusion in Wordmark Style.jpg" alt="FeelFusion logo dark" class="logo-dark" aria-hidden="true" />
-  <h1><b>FeelFusion-Adaptive Emotion Detection Game.</b></h1>
-  </div>
-    <nav aria-label="Primary" style="display: flex; align-items: center; gap: 1rem;">
-      <ul>
-        <li class="active"><a href="#" tabindex="0">Home</a></li>
-        <li class="active"><a href="#about" tabindex="0">About Us</a></li>
-      </ul>
-      <button id="darkModeToggle" aria-label="Toggle dark mode" style="padding:0.5rem 1rem; border-radius:1.5rem; border:none; background:#1863f7; color:#fff; font-family:'Poppins',sans-serif; cursor:pointer;">
+      <img src="FeelFusion light logo.png" alt="FeelFusion logo light" class="logo-light" aria-hidden="true" />
+      <img src="FeelFusion dark logo.jpg" alt="FeelFusion logo dark" class="logo-dark" aria-hidden="true" />
+      <h1><b>FeelFusion: Adaptive Emotion Based Gaming hub</b></h1>
+    </div>
+  <nav aria-label="Primary" style="display: flex; align-items: center; gap: 1rem;">
+    <ul>
+      <li class="active"><a href="#" tabindex="0">Home</a></li>
+      <li class="active"><a href="#about" tabindex="0">About Us</a></li>
+    </ul>
+    <button id="darkModeToggle" aria-label="Toggle dark mode" style="padding:0.5rem 1rem; border-radius:1.5rem; border:none; background:#1863f7; color:#fff; font-family:'Poppins',sans-serif; cursor:pointer;">
       🌙 Dark Mode
     </button>
-    </nav>
+  </nav>
   </header>
 
   <main class="container" id="main-content" tabindex="-1">
-
     <section aria-labelledby="games-gallery-title" id="games-gallery">
       
-
       <article class="game-card" tabindex="0" role="button" aria-label="Play Whack-a-Mole game" onclick="launchGame('whack')">
         <div class="game-icon" aria-hidden="true">🐹</div>
         <h3 class="game-title">Whack-a-Mole</h3>
-        <p class="game-desc">Whack them All</p>
+        <p class="game-desc">Feelings control mole spawn speed</p>
         <button class="btn-play" type="button" onclick="launchGame('whack'); event.stopPropagation();">Play Now</button>
       </article>
 
       <article class="game-card" tabindex="0" role="button" aria-label="Play Flappy Bird" onclick="launchGame('FlappyBird')">
         <div class="game-icon" aria-hidden="true">🐤</div>
         <h3 class="game-title">Flappy Bird</h3>
-        <p class="game-desc"> Fly through the pipes</p>
-        <button class="btn-play" type="button" onclick="launchGame('Flappy Bird'); event.stopPropagation();">Play Now</button>
+        <p class="game-desc"> Feelings adjust obstacle spacing</p>
+        <button class="btn-play" type="button" onclick="launchGame('FlappyBird'); event.stopPropagation();">Play Now</button>
       </article>
 
       <article class="game-card" tabindex="0" role="button" aria-label="Play Space shooter game" onclick="launchGame('SpaceShooter')">
         <div class="game-icon" aria-hidden="true"> 👾</div>
         <h3 class="game-title">Space Shooter</h3>
-        <p class="game-desc">Shoot the Aliens</p>
-        <button class="btn-play" type="button" onclick="launchGame('Space Shooter'); event.stopPropagation();">Play Now</button>
+        <p class="game-desc">Feelings determine firing speed</p>
+        <button class="btn-play" type="button" onclick="launchGame('SpaceShooter'); event.stopPropagation();">Play Now</button>
       </article>
 
       <article class="game-card" tabindex="0" role="button" aria-label="Play Car Traffic Dodge game" onclick="launchGame('carTrafficDodge')">
         <div class="game-icon" aria-hidden="true">🚗</div>
         <h3 class="game-title"> Car Traffic Dodge</h3>
-        <p class="game-desc">Dodge the oncoming traffic</p>
+        <p class="game-desc">Feelings control lane complexity</p>
         <button class="btn-play" type="button" onclick="launchGame('carTrafficDodge'); event.stopPropagation();">Play Now</button>
       </article>
 
-      <article class="game-card" tabindex="0" role="button" aria-label="Play Fruit NNinja" onclick="launchGame('Fruit Ninja')">
+      <article class="game-card" tabindex="0" role="button" aria-label="Play Fruit Ninja" onclick="launchGame('FruitNinja')">
         <div class="game-icon" aria-hidden="true">🍉</div>
         <h3 class="game-title">Fruit Ninja</h3>
-        <p class="game-desc">Slice fruits with precision</p>
-        <button class="btn-play" type="button" onclick="launchGame('Fruit Ninja'); event.stopPropagation();">Play Now</button>
+        <p class="game-desc">Feelings control fruit speed</p>
+        <button class="btn-play" type="button" onclick="launchGame('FruitNinja'); event.stopPropagation();">Play Now</button>
+      </article>
+      
+      <article class="game-card" tabindex="0" role="button" aria-label="Play Snake Game" onclick="launchGame('Snake')">
+        <div class="game-icon" aria-hidden="true">🐍</div>
+        <h3 class="game-title">Snake Game</h3>
+        <p class="game-desc">Feelings controls snake speed and fruit scoring</p>
+        <button class="btn-play" type="button" onclick="launchGame('Snake'); event.stopPropagation();">Play Now</button>
       </article>
 
       <article class="game-card" tabindex="0" role="button" aria-label="Play Emoji Memory Match game" onclick="launchGame('memorymatch')">
         <div class="game-icon" aria-hidden="true">🧠</div>
         <h3 class="game-title">Emoji Memory Match</h3>
-        <p class="game-desc">Train your brain with matches</p>
+        <p class="game-desc">Feelings enhance memory experience</p>
         <button class="btn-play" type="button" onclick="launchGame('memorymatch'); event.stopPropagation();">Play Now</button>
       </article>
 
       <article class="game-card" tabindex="0" role="button" aria-label="Play Ping Pong game" onclick="launchGame('pingpong')">
         <div class="game-icon" aria-hidden="true">🏓</div>
         <h3 class="game-title">Ping Pong</h3>
-        <p class="game-desc">Keep the ball bouncing!</p>
+        <p class="game-desc">Background colors transform based on detected emotions</p>
         <button class="btn-play" type="button" onclick="launchGame('pingpong'); event.stopPropagation();">Play Now</button>
       </article>
 
-      <article class="game-card" tabindex="0" role="button" aria-label="Play Snake Game" onclick="launchGame('Snake')">
-        <div class="game-icon" aria-hidden="true">🐍</div>
-        <h3 class="game-title">Snake Game</h3>
-        <p class="game-desc">Guide the snake to eat the fruits</p>
-        <button class="btn-play" type="button" onclick="launchGame('Snake'); event.stopPropagation();">Play Now</button>
+      <article class="game-card" tabindex="0" role="button" aria-label="Play Maze Game" onclick="launchGame('Maze')">
+        <div class="game-icon" aria-hidden="true">🌀</div>
+        <h3 class="game-title">Maze Game</h3>
+        <p class="game-desc">Mood-painted labyrinth navigation game</p>
+        <button class="btn-play" type="button" onclick="launchGame('Maze'); event.stopPropagation();">Play Now</button>
       </article>
     </section>
 
@@ -106,39 +99,15 @@
         📘 About FeelFusion
       </h2>
       <ul>
-        <li><strong>What is FeelFusion?</strong> <br />A game hub powered by real-time emotion detection, adapting gameplay based on your feelings. It blends web tech, AI, and interactivity into a unified experience.</li>
+        <li><strong>What is FeelFusion?</strong> <br />A game hub powered by real-time emotion detection, adapting gameplay based on your emotions.</li>
         <li><strong>How Emotion Detection Works:</strong> <br />Using face-api.js, our platform reads expressions from your webcam to adjust game difficulty in real time. Play harder when you're smiling — or take it easy when you're stressed.</li>
-        <li><strong>Technologies Used:</strong> <br />HTML5, CSS3, JavaScript, face-api.js (TensorFlow backend), Google Fonts, Visual Studio Code.</li>
-        <li><strong>Credits:</strong> <br />Special thanks to all contributors and the open-source community that made this possible.</li>
+        <li><strong>Technologies Used:</strong> <br />HTML5, CSS3, JavaScript, face-api.js (TensorFlow backend).</li>
+        <li><strong>All the emotion detection code runs locally on your system so don't worry about your privacy</strong></li>
       </ul>
     </section>
   </main>
   <footer>
-    © 2025 FeelFusion — Built with 💡 and 😄. All rights reserved.
+    2025 FeelFusion — Built with 💡 and 😄.
   </footer>
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const toggleBtn = document.getElementById('darkModeToggle');
-    toggleBtn.addEventListener('click', function() {
-      document.body.classList.toggle('dark-mode');
-      this.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
-    });
-  });
-</script>
-  <script>
-    /* Navigation click handler to open games in new tabs */
-    function launchGame(gameId) {
-      const urls = {
-        whack:     "mole game/index.html",
-        carhurdle: "",
-        memorymatch:""
-      };
-      if(urls[gameId]){
-        window.open(urls[gameId], '_blank', 'noopener');
-      } else {
-        alert("Sorry, that game is not available yet!");
-      }
-    }
-  </script>
 </body>
 </html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maze</title>
+  <link rel="stylesheet" href="./style.css" />
+
+  <!-- Scripts -->
+  <script defer src="../face-api.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.18/jquery.touchSwipe.min.js"></script>
+  <script defer src="./script.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Sidebar for camera & emotion -->
+  <div class="sidebar">
+    <div class="video-container">
+      <video id="video" autoplay muted></video>
+    </div>
+    <div class="emotion-display">
+      <div class="emotion-label" id="emotionLabel">No face detected</div>
+      <div class="confidence-score" id="confidenceScore">---</div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div id="page">
+
+    <!-- Congratulations popup -->
+    <div id="Message-Container">
+      <div id="message">
+        <h1>Congratulations!</h1>
+        <p>You are done.</p>
+        <p id="moves"></p>
+        <input id="okBtn" type="button" onclick="toggleVisablity('Message-Container')" value="Cool!" />
+      </div>
+    </div>
+
+    <!-- Game Menu -->
+    <div id="menu">
+      <div class="custom-select">
+        <select id="diffSelect">
+          <option value="10" class="option">Easy</option>
+          <option value="15" class="option">Medium</option>
+          <option value="25" class="option">Hard</option>
+          <option value="38" class="option">Extreme</option>
+        </select>
+      </div>
+      <input id="startMazeBtn" type="button" onclick="makeMaze()" value="Start" />
+    </div>
+
+    <!-- Maze Canvas -->
+    <div id="view">
+      <div id="mazeContainer">
+        <canvas id="mazeCanvas" class="border" height="1100" width="1100"></canvas>
+      </div>
+    </div>
+
+    <!-- Instructions -->
+    <p id="instructions">Use arrow keys to move the key to the house!</p>
+
+  </div>
+
+  
+
+</body>
+</html>

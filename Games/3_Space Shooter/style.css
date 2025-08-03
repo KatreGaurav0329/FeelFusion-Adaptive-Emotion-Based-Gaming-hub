@@ -1,0 +1,139 @@
+body { 
+	background-color: black;
+	transition: background-color 0.5s ease; /* Smooth color transition */
+	font-family: 'Courier New', monospace;
+	font-weight: bold;
+}
+.video-container {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  width: 320px;
+  height: 240px;
+  background: #181f2a;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(60, 80, 160, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emotion-display {
+  position: fixed;
+  top: 280px;
+  left: 24px;
+  width: 320px;
+  background: rgba(34, 40, 60, 0.92);
+  color: #fff;
+  padding: 18px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 500;
+  text-align: center;
+  z-index: 1001;
+  box-shadow: 0 4px 16px rgba(60, 80, 160, 0.10);
+}
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+table {
+	table-layout: fixed;
+	width: 760px;
+	border-spacing: 0;
+}
+canvas {
+	border: 5px solid blue;
+}
+td { 
+	width: 185px;
+	font-size: 1.5em;
+	text-align: center;
+}
+h3 {
+	color: red;
+	text-align: center;
+	font-size: 1.5em;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	border-top: 1px solid blue;
+}
+h3.meet {
+	color: blue;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+	color: blue;
+	text-align: left;
+}
+li {
+	padding-left: 5px;
+}
+li.description {
+	padding-right: 5px;
+	font-weight: normal;
+	font-size: 0.8em;
+	color: red;
+}
+li.bullet {
+	padding-left: 1.5em;
+	text-indent: -1.2em;
+}
+#labels {
+	color: blue;
+}
+#controls {
+	color: red;
+}
+#score_label {
+	vertical-align: top;
+}
+#values {
+	color: red;
+}
+.content {
+	max-width: 760px;
+	margin-left: auto;
+	margin-right: auto;
+	border-left: 1px solid blue;
+	border-right: 1px solid blue;
+}
+.title {
+	margin: auto;
+	border-left: 5px solid blue;
+	border-right: 5px solid blue;
+	border-top: 5px solid blue;
+}
+.control_label {
+	color: blue;
+	font-size: 1.2em;	
+}
+.control_description {
+	font-size: 1.2em;	
+}
+td.cast {
+	width: 145px;
+	color: red;
+	font-size: 1.2em;
+	border-right: 1px solid blue;
+}
+td.cast_description {
+	width: 145;
+	color: red;
+	font-size: 1em;
+	vertical-align: top;
+	border-right: 1px solid blue;
+	border-bottom: 1px solid blue;
+}
+td.last {
+	border-right: none;
+}
+td.top {
+	border-top: 1px solid blue;
+	padding-top: 5px;
+}

@@ -1,0 +1,224 @@
+/* Basic Reset and Layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    transition: background-color 0.5s ease;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-container {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 320px;
+  height: 240px;
+  background: #000;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 1000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.emotion-display {
+  position: fixed;
+  top: 280px;
+  left: 20px;
+  width: 320px;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1001;
+}
+
+.emotion-label {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.confidence-score {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.game-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.expression-popup {
+  position: fixed;          /* or absolute if preferred */
+  bottom: 20px;
+  right: 20px;
+  max-width: 300px;
+  padding: 15px 20px;
+  background-color: rgba(0,0,0,0.75);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 1500;
+  user-select: none;
+  pointer-events: none;   /* clicks pass through */
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+
+
+h1 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+}
+
+.score-board {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+/* Game Grid */
+.memory-game {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto 20px;
+    perspective: 1000px; /* 3D perspective for flip effect */
+}
+
+/* Card Styling */
+.memory-card {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease-in-out;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.memory-card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.card-front {
+    background: linear-gradient(45deg, #ff6b6b, #feca57);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.card-back {
+    background: linear-gradient(45deg, #48cae4, #023e8a);
+    color: white;
+}
+
+/* Matched Cards */
+.memory-card.matched {
+    opacity: 0.6;
+    cursor: default;
+}
+
+/* Controls */
+.controls button {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.controls button:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .memory-game {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        max-width: 400px;
+    }
+    
+    .memory-card {
+        width: 80px;
+        height: 80px;
+        font-size: 1.5rem;
+    }
+}
+/* === Difficulty Selector === */
+.difficulty-selector {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.difficulty-selector label {
+    color: white;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.difficulty-btn {
+    background: #48cae4;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin: 0 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.difficulty-btn:hover {
+    background: #023e8a;
+    transform: translateY(-2px);
+}
+
+.difficulty-btn.active {
+    background: #ff6b6b;
+    transform: scale(1.05);
+}

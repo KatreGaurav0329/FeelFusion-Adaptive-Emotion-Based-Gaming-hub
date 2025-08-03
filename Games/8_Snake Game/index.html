@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐍 Snake Game</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="../face-api.min.js"></script>
+    <script defer src="script.js"></script>
+</head>
+
+<body>
+
+    <div class="video-container">
+        <video id="video" autoplay muted></video>
+    </div>
+
+    <div class="emotion-display">
+        <div class="emotion-label" id="emotionLabel">No face detected</div>
+        <div class="confidence-score" id="confidenceScore">---</div>
+    </div>
+    <div id="diff-display" style="
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.75);
+        color: #fff;
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        z-index: 1000;
+        min-width: 200px;
+        ">
+        <strong>Emotion:</strong> --- <br/>
+    <strong>Speed:</strong> -- ms/frame<br/>
+    <strong>Fruit Score:</strong> --
+    </div>
+
+    <div id="startScreen">
+        <h1>SNAKE</h1>
+        <div class="mode-selection">
+            <h2>Select a Mode</h2>
+            <button data-mode="super_easy">Super Easy</button>
+            <button data-mode="easy">Easy</button>
+            <button data-mode="medium">Medium</button>
+            <button data-mode="hard">Hard</button>
+            <button data-mode="super_hard">Super Hard</button>
+        </div>
+    </div>
+
+    <div id="mainGameUI" class="hidden">
+        <div class="score-container">
+            <span>Score: <span id="score">0</span></span>
+            <span>High Score: <span id="high-score">0</span></span>
+        </div>
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <div id="gameOverScreen" class="hidden">
+            <h2>Game Over</h2>
+            <p>Press 'Enter' to return to the menu</p>
+        </div>
+    </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fruit Ninja with Play/Pause</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="../face-api.min.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+<div class="video-container">
+    <video id="video" width="320" height="240" autoplay muted></video>
+  </div>
+  
+  <div class="emotion-display">
+    <div class="emotion-label" id="emotionLabel">No face detected</div>
+    <div class="confidence-score" id="confidenceScore">---</div>
+  </div>
+  <div id="game-container">
+    
+    <div id="score">Score: 0</div>
+    <div id="controls">
+      <select id="difficulty">
+        <option value="easy" selected>Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+        <option value="superhard">Super Hard</option>
+      </select>
+      <button id="playBtn">Play</button>
+      <button id="pauseBtn">Stop</button>
+    </div>
+    <div id="difficulty-display" class="difficulty-display"></div>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div id="game-over">
+      <h1>Game Over!</h1>
+      <button id="restartBtn">Play Again</button>
+    </div>
+  </div>
+
+    
+</body>
+</html>

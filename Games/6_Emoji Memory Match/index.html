@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Card Game</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="../face-api.min.js"></script>
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="video-container">
+    <video id="video" width="320" height="240" autoplay muted></video>
+  </div>
+  
+  <div class="emotion-display">
+    <div class="emotion-label" id="emotionLabel">No face detected</div>
+    <div class="confidence-score" id="confidenceScore">---</div>
+  </div>
+  <div id="expression-popup" class="expression-popup"></div>
+    <div class="game-container">
+        <!-- ADD right after opening .game-container -->
+    
+
+<div class="difficulty-selector">
+    <label>Difficulty:</label>
+    <button class="difficulty-btn active" data-difficulty="easy">Easy&nbsp;(4×2)</button>
+    <button class="difficulty-btn" data-difficulty="medium">Medium&nbsp;(4×3)</button>
+    <button class="difficulty-btn" data-difficulty="hard">Hard&nbsp;(4×4)</button>
+</div>
+
+        <h1>Memory Card Game</h1>
+        <div class="score-board">
+            <span>Time: <span id="timer">00:00</span></span>
+
+            <span>Score: <span id="score">0</span></span>
+            <span>Moves: <span id="moves">0</span></span>
+        </div>
+        <div class="memory-game" id="game-board">
+            <!-- Cards will be generated dynamically with JavaScript -->
+        </div>
+        <div class="controls">
+            <button id="restart-btn" onclick="restartGame()">Restart Game</button>
+            <button id="pause-btn" onclick="togglePause()">Pause</button>
+        </div>
+        
+    </div>
+    
+</body>
+</html>

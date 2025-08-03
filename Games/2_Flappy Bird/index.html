@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/favicon.ico"/>
+    <title>Flappy Bird Game</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="../face-api.min.js"></script>
+    <script defer src="script.js" defer></script>
+</head>
+<body>
+
+    <div class="video-container">
+    <video id="video" width="320" height="240" autoplay muted></video>
+  </div>
+  
+  <div class="emotion-display">
+    <div class="emotion-label" id="emotionLabel">No face detected</div>
+    <div class="confidence-score" id="confidenceScore">---</div>
+  </div>
+    <div class="background"></div>
+    <img src="images/Bird.png" alt="bird-img" class="bird" id="bird-1">
+    <div class="message">
+        Enter To Start Game <p><span style="color: red;">&uarr;</span> ArrowUp to Control</p>
+    </div>
+    <div class="score">
+        <span class="score_title"></span>
+        <span class="score_val"></span>
+    </div>
+    <div id="flappy-diff-display" style="
+  position: fixed;
+  top: 28px;
+  right: 24px;
+  min-width: 220px;
+  background: rgba(12,18,32,0.9);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  z-index: 1000;
+">
+  Loading Flappy settings...
+</div>
+</body>
+</html>
