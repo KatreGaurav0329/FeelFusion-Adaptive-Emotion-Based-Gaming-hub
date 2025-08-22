@@ -20,7 +20,7 @@ function launchGame(gameId) {
     Maze: "Games/9_Maze Game/index.html"
   };
   if(urls[gameId]){
-    window.open(urls[gameId], '_blank', 'noopener');
+    window.open(urls[gameId], '_self', 'noopener');
   } else {
     alert("Sorry, that game is not available yet!");
   }

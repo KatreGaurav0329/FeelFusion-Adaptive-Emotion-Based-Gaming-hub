@@ -2,6 +2,7 @@
 const video = document.getElementById('video');
 const emotionLabel = document.getElementById('emotionLabel');
 const confidenceScore = document.getElementById('confidenceScore');
+const colorInfo = document.getElementById('colorInfo');
 
 const holes = document.querySelectorAll(".hole");
 const scoreBoard = document.querySelector(".score");
@@ -26,38 +27,45 @@ let currentEmotion = 'neutral'; // Track current emotion for speed control
 
 let currentSpeed = { min: 800, max: 1000 }; // Start with neutral speed
 let targetSpeed = { min: 800, max: 1000 };
-let transitionSpeed = 0.01;
+let transitionSpeed = 0.05;
 
 // Define emotion-color mappings
 const emotionColors = {
   happy: { 
-    color: '#62ff00ff'
+    color: '#04e7f7ff', // Gold/Yellow
+    name: 'Golden Yellow (Joy)'
   },
   sad: { 
-    color: '#46b491ff'
+    color: '#557c7eff', // Steel Blue
+    name: 'Steel Blue (Sadness)'
   },
   angry: { 
-    color: '#07b430ff'
+    color: '#0c76daff', // Crimson Red
+    name: 'Crimson Red (Anger)'
   },
   surprised: { 
-    color: '#9370DB'
+    color: '#05ffdeff', // Medium Purple
+    name: 'Medium Purple (Surprise)'
   },
   fearful: { 
-    color: '#267e40ff'
+    color: '#2977ddff', // Dark Slate Blue
+    name: 'Dark Purple (Fear)'
   },
   disgusted: { 
-    color: '#6B8E23'
+    color: '#1a29f7ec', // Olive Green
+    name: 'Olive Green (Disgust)'
   },
   neutral: { 
-    color: '#8ada11af'
+    color: '#11c6fde8', // Light Gray
+    name: 'Light Gray (Neutral)'
   }
 };
 
 // UPDATED: Emotion-based speed control instead of manual modes
 const emotionSpeeds = {
-  happy: { min: 500, max: 700 },      // Very fast - high energy
-  surprised: { min: 600, max: 800 },  // Fast - excitement
-  angry: { min: 800, max: 1000 },      // Medium-fast - intensity
+  happy: { min: 300, max: 500 },      // Very fast - high energy
+  surprised: { min: 400, max: 600 },  // Fast - excitement
+  angry: { min: 500, max: 800 },      // Medium-fast - intensity
   neutral: { min: 900, max: 1200 },   // Medium - default
   fearful: { min: 1000, max: 1400 },  // Slow - anxiety
   disgusted: { min: 1300, max: 1600 }, // Slower - negative emotion
@@ -72,9 +80,6 @@ const modeSpeeds = {
   hard: { min: 400, max: 700 },
   "super-hard": { min: 200, max: 400 }
 };
-
-
-
 // Linear interpolation function
 function lerp(start, end, factor) {
   return start + (end - start) * factor;
@@ -197,21 +202,32 @@ function getHighestEmotion(expressions) {
 }
 
 // UPDATED: Function to change background color AND update game speed based on emotion
+// NEW, SAFER, AND CORRECTED VERSION
 function changeBackgroundColor(emotion) {
-  const colorData = emotionColors[emotion];
-  if (colorData) {
-    document.body.style.backgroundColor = colorData.color;
-        
-    // Set target speed instead of immediately changing
-    if (emotionSpeeds[emotion]) {
-      targetSpeed = emotionSpeeds[emotion];
-    }
+  // Use a fallback to 'neutral' if the emotion isn't in our color map or is undefined
+  const emotionKey = (emotion && emotionColors[emotion]) ? emotion : 'neutral';
+  
+  const colorData = emotionColors[emotionKey];
+  const speedData = emotionSpeeds[emotionKey];
 
-  } else {
-    document.body.style.backgroundColor = emotionColors.neutral.color;
-    
-    targetSpeed = emotionSpeeds.neutral;
+  // 1. Update the background color using the CSS variable
+  if (colorData && colorData.color) {
+    document.documentElement.style.setProperty('--sky-color', colorData.color);
   }
+
+  // 2. Update the color info text, ONLY if the element exists
+  if (colorInfo && colorData && colorData.name) {
+    // This safety check prevents the script from crashing
+    colorInfo.textContent = `Background: ${colorData.name}`;
+  }
+
+  // 3. Update the game speed
+  if (speedData) {
+    targetSpeed = speedData;
+  }
+
+  // This log is safe because targetSpeed is always defined
+  console.log(`Target speed set to: ${targetSpeed.min}-${targetSpeed.max}ms for emotion: ${emotionKey}`);
 }
 
 // Function to format emotion name for display
@@ -269,7 +285,7 @@ video.addEventListener('play', () => {
       // Reset to neutral color and speed when no face is detected
       changeBackgroundColor('neutral');
     }
-  }, 500);
+  }, 100);
 });
 
 // Event listeners for whack-a-mole game

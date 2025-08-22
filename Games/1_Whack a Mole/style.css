@@ -1,36 +1,34 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background-color: limegreen;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, #101426 0%, #1e0c27 100%);
+  color: #ffffff;
   transition: background-color 0.5s ease;
+  overflow-x: hidden;
 }
 
-header {
-  text-align: center;
-  margin-bottom: 24px;
-}
-
+/* Video camera container */
 .video-container {
   position: fixed;
   top: 20px;
-  left: 20px;
-  width: 320px;
+  left: 30px;
+  width: 300px;
   height: 240px;
-  background: #000;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  background: #15161a;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
   z-index: 1000;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 3px solid #4b8fff;
 }
 
 video {
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 16px;
   object-fit: cover;
 }
 
@@ -38,7 +36,7 @@ canvas {
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 10px;
+  border-radius: 16px;
 }
 
 .emotion-display {
@@ -46,153 +44,148 @@ canvas {
   top: 280px;
   left: 20px;
   width: 320px;
-  background: rgba(0,0,0,0.8);
-  color: white;
-  padding: 15px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
+  background: linear-gradient(135deg, rgba(87, 139, 255, 0.85), rgba(255, 121, 198, 0.85));
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+  padding: 16px;
+  border-radius: 20px;
+  font-size: 1rem;
   text-align: center;
   z-index: 1001;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 .emotion-label {
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
 .confidence-score {
-  font-size: 14px;
-  opacity: 0.8;
+  font-size: 0.9rem;
+  color: #f9caff;
 }
 
+
+
+/* Main content */
 .main-content {
   margin-left: 380px;
-  padding: 20px;
+  padding: 5px 40px;
   min-height: 100vh;
-  color: white;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-  max-width: calc(100vw - 420px); /* Constrain width */
-}
-
-.color-info {
-  position: fixed;
-  top: 380px;
-  left: 20px;
-  width: 320px;
-  background: rgba(255,255,255,0.9);
-  color: black;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 14px;
-  text-align: center;
-  z-index: 1001;
-}
-
-.game-frame {
-  width: 100%;
-  max-width: 500px;
-  height: 350px;
-  border: none;
-  border-radius: 16px;
-  background: #f5faff;
-  box-shadow: 0 2px 10px rgba(60, 80, 160, 0.05);
-}
-
-.games-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
-}
-
-.game-card {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 6px 24px rgba(60, 80, 160, 0.10);
-  width: 140px;
-  padding: 12px 8px 8px 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.18s, box-shadow 0.18s;
-  cursor: pointer;
-  position: relative;
-}
-
-/* Scaled down whack-a-mole game styles */
-h1 {
-  text-align: center;
-  font-size: 3rem; /* Reduced from 8rem */
-  line-height: 1;
-  margin-bottom: 0.3em;
   color: #fff;
-  text-shadow: 0 2px 16px rgba(0,0,0,0.13);
+  max-width: calc(100vw - 420px);
+}
+
+.game-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 
 .score {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 0 1.5rem; /* Reduced from 3rem */
-  line-height: 1;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0 1rem;
+  margin-left: 10px;
   border-radius: 1rem;
-  color: #222;
-  -webkit-text-stroke-width: 2px;
+  color: #00ffcc;
+  font-weight: 600;
 }
 
-.controls {
-  display: flex;
-  gap: 1rem; /* Reduced from 1.5rem */
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.controls select, .controls button {
-  font-size: 1.4rem; /* Reduced from 2.2rem */
-  padding: 0.2em 0.8em;
-  border-radius: 0.8em;
-  border: none;
-  outline: none;
-  background: #fff;
-  color: #ff0101;
-  font-family: "Amatic SC", cursive;
-  font-weight: 700;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.09);
-  transition: background 0.2s, color 0.2s;
-  cursor: pointer;
-}
-
-.controls button:disabled {
-  background: #eee;
-  color: #aaa;
-  cursor: not-allowed;
-}
 .speed-display {
-  font-size: 1.2rem;
-  color: #fff;
-  background: rgba(0,0,0,0.6);
-  padding: 8px 12px;
-  border-radius: 8px;
+  font-size: 1rem;
+  background: linear-gradient(to right, #0fffc1, #ff95fb);
+  padding: 10px 16px;
+  border-radius: 12px;
   position: fixed;
   top: 20px;
   right: 20px;
   z-index: 1002;
+  color: #000000cc;
+  font-weight: 600;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
 }
 
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
 
+.controls select,
+.controls button {
+  font-size: 1.1rem;
+  padding: 0.6em 1.2em;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #444cf7, #e249a7);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.controls button:disabled {
+  background: #444444;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.controls button:hover {
+  opacity: 0.9;
+}
+
+/* Game Area */
+.game-area {
+  padding: 10px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(4px);
+}
+
+/* Game Board 
 .game {
   width: 100%;
-  max-width: 450px; /* Reduced from 600px */
-  height: 280px; /* Reduced from 400px */
+  max-width: 480px;
+  height: 280px;
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
-  background: rgba(255,255,255,0.13);
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 32px rgba(252,74,26,0.13);
-  padding: 1rem; /* Reduced from 2rem */
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  cursor: url('./assets/hamer.svg') 16 16, auto;
+}*/
+
+.game {
+  width: 100%;
+  max-width: 480px;
+  height: 280px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('./assets/mud.jpeg') center/cover no-repeat;
+    background-size: cover;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  padding: 3rem;
   cursor: url('./assets/hamer.svg') 16 16, auto;
 }
+
 
 .hole {
   flex: 1 0 33.33%;
@@ -206,7 +199,7 @@ h1 {
   background-size: contain;
   content: "";
   width: 100%;
-  height: 50px; /* Reduced from 70px */
+  height: 50px;
   position: absolute;
   z-index: 2;
   bottom: -20px;
@@ -226,53 +219,171 @@ h1 {
   top: 0;
 }
 
-.bang-effect {
-  pointer-events: none;
-  user-select: none;
-  transition: opacity 0.2s;
-}
-
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 1000px) {
   .main-content {
     margin-left: 0;
-    padding: 10px;
-    max-width: 100%;
+    padding: 20px;
+    max-width: 100vw;
   }
-  
-  .video-container, .emotion-display, .color-info {
+
+  .video-container,
+  .emotion-display,
+  .color-info {
     position: static;
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  
-  .game {
-    max-width: 100%;
-    height: 200px;
-    padding: 0.5rem;
-  }
-  
-  h1 {
-    font-size: 2rem;
-  }
-  
-  .controls select, .controls button {
-    font-size: 1rem;
+    width: calc(100% - 40px);
+    margin: 10px auto;
   }
 }
 
 @media (max-width: 700px) {
   .game {
-    width: 98vw;
-    height: 60vw;
-    padding: 1rem;
+    width: 95vw;
+    height: 55vw;
+    padding: 0.8rem;
   }
-  
-  h1 {
-    font-size: 2rem;
+
+  .game-title {
+    font-size: 1.8rem;
   }
-  
-  .controls select, .controls button {
+
+  .controls select,
+  .controls button {
     font-size: 1rem;
+    padding: 0.5em 1em;
+  }
+}
+
+
+
+
+/* --- Animated Background Styles --- */
+
+/* --- Updated Animated Background Styles --- */
+
+:root {
+  /* Define default colors that can be changed by JavaScript */
+  --sky-color: #22a4d8; /* Default light blue sky */
+  --grass-color: #59cc9c; /* Default light green grass */
+  --transition-speed: 1.5s; /* Speed for color changes */
+}
+
+.animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  /* THE KEY CHANGE IS HERE: Using CSS variables */
+  background: linear-gradient(180deg, var(--sky-color) 0%, var(--grass-color) 70%);
+  overflow: hidden;
+  /* Add a smooth transition for color changes */
+  transition: background var(--transition-speed) ease-in-out;
+}
+
+
+
+
+
+/* Hills (No changes here, but included for completeness) */
+.hill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200vw;
+  height: 25vh;
+  background-size: 50% 100%;
+  animation: slide 60s linear infinite;
+  transition: opacity var(--transition-speed) ease; /* Optional: fade hills slightly on color change */
+}
+
+.hill-back {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 200'%3E%3Cpath d='M0,200 C250,50 350,220 500,150 C650,80 750,250 1000,100 L1000,200 L0,200 Z' fill='%23228B22'/%3E%3C/svg%3E");
+  z-index: 2;
+  opacity: 0.8;
+  height: 28vh;
+  animation-duration: 80s;
+}
+
+.hill-front {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 200'%3E%3Cpath d='M0,200 C200,100 350,250 500,120 C650,0 850,220 1000,150 L1000,200 L0,200 Z' fill='%2332CD32'/%3E%3C/svg%3E");
+  z-index: 3;
+  animation-duration: 50s;
+}
+
+
+
+/* Clouds */
+.cloud {
+  position: absolute;
+  width: 200px;
+  height: 60px;
+  background: #f2f9fe;
+  border-radius: 60px;
+  box-shadow: 10px 10px rgba(0,0,0,0.05);
+  animation: move-cloud 20s linear infinite;
+}
+
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background: #f2f9fe;
+  border-radius: 50%;
+}
+
+.cloud::before {
+  width: 100px;
+  height: 100px;
+  top: -50px;
+  left: 40px;
+}
+
+.cloud::after {
+  width: 60px;
+  height: 60px;
+  top: -30px;
+  right: 30px;
+}
+
+/* Different positions and speeds for clouds */
+.cloud-1 {
+  top: 10%;
+  transform: scale(0.8);
+  animation-duration: 45s;
+  animation-delay: -5s;
+}
+
+.cloud-2 {
+  top: 25%;
+  transform: scale(1.1);
+  animation-duration: 30s;
+  animation-delay: -15s;
+}
+
+.cloud-3 {
+  top: 18%;
+  left: -250px; /* Start off-screen */
+  transform: scale(0.6);
+  animation-duration: 60s;
+  animation-delay: -2s;
+}
+
+/* Keyframe Animations */
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Moves exactly one instance of the hill */
+  }
+}
+
+@keyframes move-cloud {
+  0% {
+    transform: translateX(-250px);
+  }
+  100% {
+    transform: translateX(100vw);
   }
 }

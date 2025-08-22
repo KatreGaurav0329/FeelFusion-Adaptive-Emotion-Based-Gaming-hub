@@ -5,64 +5,80 @@ const confidenceScore = document.getElementById('confidenceScore');
 
 const emotionGameSettings = {
   neutral: {
-    pipeGap: 35,          
-    pipeSpeed: 3,         
-    pipeFrequency: 115    
+    pipeGap: 35,
+    pipeSpeed: 3,
+    pipeFrequency: 115,
+    brightness: 1,      // NEW: Normal brightness
+    pipeScale: 1,       // NEW: Normal pipe length
   },
   happy: {
     pipeGap: 30,
     pipeSpeed: 4,
-    pipeFrequency: 100
+    pipeFrequency: 100,
+    brightness: 1.2,    // NEW: Brighter background
+    pipeScale: 1.1,     // NEW: Longer pipes
   },
   sad: {
     pipeGap: 45,
     pipeSpeed: 2.5,
-    pipeFrequency: 130
+    pipeFrequency: 130,
+    brightness: 0.65,   // NEW: Dimmer background
+    pipeScale: 0.85,    // NEW: Shorter pipes
   },
   angry: {
     pipeGap: 40,
     pipeSpeed: 3.5,
-    pipeFrequency: 110
+    pipeFrequency: 110,
+    brightness: 0.85,   // NEW: Slightly darker, intense feel
+    pipeScale: 1.15,    // NEW: Longer, more imposing pipes
   },
   surprised: {
     pipeGap: 32,
     pipeSpeed: 4.2,
-    pipeFrequency: 95
+    pipeFrequency: 95,
+    brightness: 1.15,   // NEW: Bright flash of surprise
+    pipeScale: 1.05,    // NEW: Slightly longer pipes
   },
   fearful: {
     pipeGap: 38,
     pipeSpeed: 3,
-    pipeFrequency: 120
+    pipeFrequency: 120,
+    brightness: 0.7,    // NEW: Darker, more ominous
+    pipeScale: 0.9,     // NEW: Shorter, less threatening pipes
   },
   disgusted: {
     pipeGap: 42,
     pipeSpeed: 2.8,
-    pipeFrequency: 125
+    pipeFrequency: 125,
+    brightness: 0.8,    // NEW: Muted, dull colors
+    pipeScale: 0.95,    // NEW: Slightly shorter pipes
   }
 };
+
 // Start with neutral config
 let lastEmotion = 'neutral';
 let currentPipeGap = emotionGameSettings.neutral.pipeGap;
 let currentPipeSpeed = emotionGameSettings.neutral.pipeSpeed;
 let currentPipeFrequency = emotionGameSettings.neutral.pipeFrequency;
+let currentBrightness = emotionGameSettings.neutral.brightness; // NEW:
+let currentPipeScale = emotionGameSettings.neutral.pipeScale;   // NEW:
 
 // For smooth transition 
 let targetPipeGap = currentPipeGap;
 let targetPipeSpeed = currentPipeSpeed;
 let targetPipeFrequency = currentPipeFrequency;
+let targetBrightness = currentBrightness; // NEW:
+let targetPipeScale = currentPipeScale;   // NEW:
 
-
-let move_speed = currentPipeSpeed, grativy = 0.5;
+let grativy = 0.5;
 let bird = document.querySelector('.bird');
 let img = document.getElementById('bird-1');
 let sound_point = new Audio('sounds effect/point.mp3');
 let sound_die = new Audio('sounds effect/die.mp3');
 
-// getting bird element properties
 let bird_props = bird.getBoundingClientRect();
-
-// This method returns DOMReact -> top, right, bottom, left, x, y, width and height
-let background = document.querySelector('.background').getBoundingClientRect();
+let background = document.querySelector('.background'); // MODIFIED: Get the element, not its props yet.
+let background_props = background.getBoundingClientRect();
 
 let score_val = document.querySelector('.score_val');
 let message = document.querySelector('.message');
@@ -73,7 +89,6 @@ img.style.display = 'none';
 message.classList.add('messageStyle');
 
 document.addEventListener('keydown', (e) => {
-    
     if(e.key == 'Enter' && game_state != 'Play'){
         document.querySelectorAll('.pipe_sprite').forEach((e) => {
             e.remove();
@@ -96,8 +111,14 @@ function play(){
         updateDynamicSettings();
         displayFlappyDifficulty(lastEmotion || 'neutral');
 
+        // MODIFIED: Apply visual styles every frame
+        background.style.filter = `brightness(${currentBrightness})`;
+
         let pipe_sprite = document.querySelectorAll('.pipe_sprite');
         pipe_sprite.forEach((element) => {
+            // MODIFIED: Apply scale transform to pipes
+            element.style.transform = `scaleY(${currentPipeScale})`;
+
             let pipe_sprite_props = element.getBoundingClientRect();
             bird_props = bird.getBoundingClientRect();
 
@@ -112,7 +133,7 @@ function play(){
                     sound_die.play();
                     return;
                 }else{
-                    if(pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + move_speed >= bird_props.left && element.increase_score == '1'){
+                    if(pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + currentPipeSpeed >= bird_props.left && element.increase_score == '1'){
                         score_val.innerHTML = +score_val.innerHTML + 1;
                         sound_point.play();
                     }
@@ -141,7 +162,7 @@ function play(){
             }
         });
 
-        if(bird_props.top <= 0 || bird_props.bottom >= background.bottom){
+        if(bird_props.top <= 0 || bird_props.bottom >= background_props.bottom){
             game_state = 'End';
             message.style.left = '28vw';
             window.location.reload();
@@ -155,8 +176,6 @@ function play(){
     requestAnimationFrame(apply_gravity);
 
     let pipe_seperation = 0;
-
-    let pipe_gap = 35;
 
     function create_pipe(){
         if(game_state != 'Play') return;
@@ -187,123 +206,120 @@ function play(){
 
 // Load FaceAPI models
 Promise.all([
-  faceapi.nets.tinyFaceDetector.loadFromUri('../models'),
-  faceapi.nets.faceLandmark68Net.loadFromUri('../models'),
-  faceapi.nets.faceRecognitionNet.loadFromUri('../models'),
-  faceapi.nets.faceExpressionNet.loadFromUri('../models')
+    faceapi.nets.tinyFaceDetector.loadFromUri('../models'),
+    faceapi.nets.faceLandmark68Net.loadFromUri('../models'),
+    faceapi.nets.faceRecognitionNet.loadFromUri('../models'),
+    faceapi.nets.faceExpressionNet.loadFromUri('../models')
 ]).then(startVideo);
 
 function startVideo() {
-  navigator.mediaDevices.getUserMedia({ video: {} })
-    .then(stream => {
-      video.srcObject = stream;
-    })
-    .catch(err => console.error(err));
+    navigator.mediaDevices.getUserMedia({ video: {} })
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(err => console.error(err));
 }
 
-// Function to get the emotion with highest confidence
 function getHighestEmotion(expressions) {
-  const emotionKeys = Object.keys(expressions);
-  const highestEmotionKey = emotionKeys.reduce((a, b) => 
-    expressions[a] > expressions[b] ? a : b
-  );
-  return {
-    emotion: highestEmotionKey,
-    confidence: expressions[highestEmotionKey]
-  };
+    const emotionKeys = Object.keys(expressions);
+    const highestEmotionKey = emotionKeys.reduce((a, b) => 
+        expressions[a] > expressions[b] ? a : b
+    );
+    return {
+        emotion: highestEmotionKey,
+        confidence: expressions[highestEmotionKey]
+    };
 }
 
-
+// MODIFIED: This function now smooths the new visual properties as well.
 function updateDynamicSettings() {
-  const lerpFactor = 0.05; // adjust between 0 and 1 for smoothing speed
+    const lerpFactor = 0.05;
 
-  currentPipeGap += (targetPipeGap - currentPipeGap) * lerpFactor;
-  currentPipeSpeed += (targetPipeSpeed - currentPipeSpeed) * lerpFactor;
-  currentPipeFrequency += (targetPipeFrequency - currentPipeFrequency) * lerpFactor;
+    currentPipeGap += (targetPipeGap - currentPipeGap) * lerpFactor;
+    currentPipeSpeed += (targetPipeSpeed - currentPipeSpeed) * lerpFactor;
+    currentPipeFrequency += (targetPipeFrequency - currentPipeFrequency) * lerpFactor;
+    currentBrightness += (targetBrightness - currentBrightness) * lerpFactor; // NEW:
+    currentPipeScale += (targetPipeScale - currentPipeScale) * lerpFactor;   // NEW:
 }
 
+// MODIFIED: Now displays the new visual parameters.
 function displayFlappyDifficulty(emotion) {
-  const diffDiv = document.getElementById('flappy-diff-display');
-  if (!diffDiv) return;
+    const diffDiv = document.getElementById('flappy-diff-display');
+    if (!diffDiv) return;
 
-  // Use current (interpolated) values for smoothness
-  diffDiv.innerHTML = `
-    <b>Emotion:</b> ${emotion.charAt(0).toUpperCase() + emotion.slice(1)}<br/>
-    <b>Pipe Gap:</b> ${currentPipeGap.toFixed(1)}<br/>
-    <b>Speed:</b> ${currentPipeSpeed.toFixed(2)}<br/>
-    <b>Pipe Frequency:</b> ${currentPipeFrequency.toFixed(0)}
-  `;
+    diffDiv.innerHTML = `
+        <b>Emotion:</b> ${emotion.charAt(0).toUpperCase() + emotion.slice(1)}<br/>
+        <b>Pipe Gap:</b> ${currentPipeGap.toFixed(1)} | 
+        <b>Speed:</b> ${currentPipeSpeed.toFixed(2)} | 
+        <b>Frequency:</b> ${currentPipeFrequency.toFixed(0)} <br/>
+        <b>Brightness:</b> ${currentBrightness.toFixed(2)} | 
+        <b>Pipe Scale:</b> ${currentPipeScale.toFixed(2)}
+    `;
 }
 
-
-
-// Function to format emotion name for display
 function formatEmotionName(emotion) {
-  return emotion.charAt(0).toUpperCase() + emotion.slice(1);
+    return emotion.charAt(0).toUpperCase() + emotion.slice(1);
 }
 
-// Function to format confidence as percentage
 function formatConfidence(confidence) {
-  return `${(confidence * 100).toFixed(1)}%`;
+    return `${(confidence * 100).toFixed(1)}%`;
 }
 
-// Video event listener for emotion detection
 video.addEventListener('play', () => {
-  // Remove any existing canvas
-  const oldCanvas = document.querySelector('canvas');
-  if (oldCanvas) oldCanvas.remove();
+    const oldCanvas = document.querySelector('canvas');
+    if (oldCanvas) oldCanvas.remove();
+    
+    const displaySize = { width: video.videoWidth, height: video.videoHeight };
+    const canvas = faceapi.createCanvasFromMedia(video);
+    
+    canvas.style.position = 'absolute';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.borderRadius = '10px';
+    
+    document.querySelector('.video-container').appendChild(canvas);
+    faceapi.matchDimensions(canvas, displaySize);
 
-  // Wait for video to have dimensions
-  const displaySize = { width: video.videoWidth, height: video.videoHeight };
-  const canvas = faceapi.createCanvasFromMedia(video);
-  
-  // Position canvas to overlay the video
-  canvas.style.position = 'absolute';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-  canvas.style.borderRadius = '10px';
-  
-  document.querySelector('.video-container').appendChild(canvas);
-  faceapi.matchDimensions(canvas, displaySize);
+    const detectionInterval = setInterval(async () => {
+        const detections = await faceapi.detectAllFaces(
+            video, 
+            new faceapi.TinyFaceDetectorOptions()
+        ).withFaceLandmarks().withFaceExpressions();
 
-  const detectionInterval = setInterval(async () => {
-    const detections = await faceapi.detectAllFaces(
-      video, 
-      new faceapi.TinyFaceDetectorOptions()
-    ).withFaceLandmarks().withFaceExpressions();
+        const resizedDetections = faceapi.resizeResults(detections, displaySize);
+        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
 
-    const resizedDetections = faceapi.resizeResults(detections, displaySize);
-    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        if (detections.length > 0) {
+            const expressions = detections[0].expressions;
+            const result = getHighestEmotion(expressions);
+            
+            emotionLabel.textContent = formatEmotionName(result.emotion);
+            confidenceScore.textContent = `Confidence: ${formatConfidence(result.confidence)}`;
+            
+            // MODIFIED: Now sets the targets for the new visual properties.
+            if (result.emotion !== lastEmotion) {
+                let settings = emotionGameSettings[result.emotion] || emotionGameSettings.neutral;
+                targetPipeGap = settings.pipeGap;
+                targetPipeSpeed = settings.pipeSpeed;
+                targetPipeFrequency = settings.pipeFrequency;
+                targetBrightness = settings.brightness; // NEW:
+                targetPipeScale = settings.pipeScale;   // NEW:
+                lastEmotion = result.emotion;
+            }
+        } else {
+            emotionLabel.textContent = 'No face detected';
+            confidenceScore.textContent = '---';
 
-    // Extract and display emotions + change background + update game speed
-    if (detections.length > 0) {
-      const expressions = detections[0].expressions;
-      const result = getHighestEmotion(expressions);
-      
-      // Update emotion display
-      emotionLabel.textContent = formatEmotionName(result.emotion);
-      confidenceScore.textContent = `Confidence: ${formatConfidence(result.confidence)}`;
-      
-
-      // On emotion change, update target pipe parameters smoothly
-      if (result.emotion !== lastEmotion) {
-        let settings = emotionGameSettings[result.emotion] || emotionGameSettings.neutral;
-        targetPipeGap = settings.pipeGap;
-        targetPipeSpeed = settings.pipeSpeed;
-        targetPipeFrequency = settings.pipeFrequency;
-        lastEmotion = result.emotion;
-      }
-    } else {
-        emotionLabel.textContent = 'No face detected';
-        confidenceScore.textContent = '---';
-
-        if (lastEmotion !== 'neutral') {
-          let settings = emotionGameSettings.neutral;
-          targetPipeGap = settings.pipeGap;
-          targetPipeSpeed = settings.pipeSpeed;
-          targetPipeFrequency = settings.pipeFrequency;
-          lastEmotion = 'neutral';
+            // MODIFIED: Reset to neutral, including the new visual properties.
+            if (lastEmotion !== 'neutral') {
+                let settings = emotionGameSettings.neutral;
+                targetPipeGap = settings.pipeGap;
+                targetPipeSpeed = settings.pipeSpeed;
+                targetPipeFrequency = settings.pipeFrequency;
+                targetBrightness = settings.brightness; // NEW:
+                targetPipeScale = settings.pipeScale;   // NEW:
+                lastEmotion = 'neutral';
+            }
         }
-      }
-  }, 500);
+    }, 500);
 });
