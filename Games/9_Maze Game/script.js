@@ -629,7 +629,6 @@ function startVideo() {
     .catch(err => console.error(err));
 }
 
-// Function to get the emotion with highest confidence
 function getHighestEmotion(expressions) {
   const emotionKeys = Object.keys(expressions);
   const highestEmotionKey = emotionKeys.reduce((a, b) =>
@@ -641,7 +640,6 @@ function getHighestEmotion(expressions) {
   };
 }
 
-// Function to change background color based on emotion
 function changeBackgroundColor(emotion) {
   const colorData = emotionColors[emotion];
   if (colorData) {
@@ -653,44 +651,30 @@ function changeBackgroundColor(emotion) {
   }
 }
 
-// Function to format emotion name for display
 function formatEmotionName(emotion) {
   return emotion.charAt(0).toUpperCase() + emotion.slice(1);
 }
-
-// Function to format confidence as percentage
 function formatConfidence(confidence) {
   return `${(confidence * 100).toFixed(1)}%`;
 }
 
 video.addEventListener('play', () => {
-
-  // Wait for video to have dimensions
-  const displaySize = { width: video.videoWidth, height: video.videoHeight };
-
-  const detectionInterval = setInterval(async () => {
+const detectionInterval = setInterval(async () => {
     const detections = await faceapi.detectAllFaces(
       video,
       new faceapi.TinyFaceDetectorOptions()
     ).withFaceLandmarks().withFaceExpressions();
-
-    const resizedDetections = faceapi.resizeResults(detections, displaySize);
-
-    // Extract and display emotions + change background
     if (detections.length > 0) {
       const expressions = detections[0].expressions;
       const result = getHighestEmotion(expressions);
 
-      // Update emotion display
       emotionLabel.textContent = formatEmotionName(result.emotion);
       confidenceScore.textContent = `Confidence: ${formatConfidence(result.confidence)}`;
 
-      // Change background color based on detected emotion
       changeBackgroundColor(result.emotion);
     } else {
       emotionLabel.textContent = 'No face detected';
       confidenceScore.textContent = '---';
-      // Reset to neutral color when no face is detected
       changeBackgroundColor('neutral');
     }
   }, 500);

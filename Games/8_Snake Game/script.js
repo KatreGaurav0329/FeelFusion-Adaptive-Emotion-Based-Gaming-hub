@@ -334,7 +334,6 @@ function startVideo() {
     .catch(err => console.error(err));
 }
 
-// Function to get the emotion with highest confidence
 function getHighestEmotion(expressions) {
   const emotionKeys = Object.keys(expressions);
   const highestEmotionKey = emotionKeys.reduce((a, b) => 
@@ -346,7 +345,6 @@ function getHighestEmotion(expressions) {
   };
 }
 
-// UPDATED: Function to change background color AND update game speed based on emotion
 function changeBackgroundColor(emotion) {
   const colorData = emotionColors[emotion];
   if (colorData) {
@@ -374,39 +372,20 @@ function displaySnakeDifficulty(emotion) {
   `;
 }
 
-
-
-
-
-// Function to format emotion name for display
 function formatEmotionName(emotion) {
   return emotion.charAt(0).toUpperCase() + emotion.slice(1);
 }
-
-// Function to format confidence as percentage
 function formatConfidence(confidence) {
   return `${(confidence * 100).toFixed(1)}%`;
 }
 
-// Video event listener for emotion detection
 video.addEventListener('play', () => {
-    // Wait for video to have dimensions
-  const displaySize = { width: video.videoWidth, height: video.videoHeight };
-  //const canvas = faceapi.createCanvasFromMedia(video);  
-  
-  //document.querySelector('.video-container').appendChild(canvas);
-  //faceapi.matchDimensions(canvas, displaySize);
-
   const detectionInterval = setInterval(async () => {
     const detections = await faceapi.detectAllFaces(
       video, 
       new faceapi.TinyFaceDetectorOptions()
     ).withFaceLandmarks().withFaceExpressions();
 
-    const resizedDetections = faceapi.resizeResults(detections, displaySize);
-    //canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-
-    // Extract and display emotions + change background + update game speed
     if (detections.length > 0) {
       const expressions = detections[0].expressions;
       const result = getHighestEmotion(expressions);
@@ -414,11 +393,7 @@ video.addEventListener('play', () => {
       emotionLabel.textContent = formatEmotionName(result.emotion);
       confidenceScore.textContent = `Confidence: ${formatConfidence(result.confidence)}`;
 
-      // Change background color and update game speed based on detected emotion
-      changeBackgroundColor(result.emotion);
-      
-
-
+      changeBackgroundColor(result.emotion);      
       if (result.emotion !== lastEmotion) {
         displaySnakeDifficulty(lastEmotion);
         lastEmotion = result.emotion;
@@ -435,41 +410,3 @@ video.addEventListener('play', () => {
     }
   }, 500);
 });
-
-//********************** *changes for  for navigation ****************************
- document.addEventListener('DOMContentLoaded', () => {
-            const menuToggle = document.getElementById('menu-toggle');
-            const navMenu = document.getElementById('nav-menu');
-            const darkModeToggle = document.getElementById('darkModeToggle');
-
-            // Logic for the hamburger menu
-            if (menuToggle && navMenu) {
-                menuToggle.addEventListener('click', () => {
-                    // Toggle the menu's visibility
-                    navMenu.classList.toggle('nav-active');
-                    // Animate the hamburger icon
-                    menuToggle.classList.toggle('is-active');
-                });
-            }
-
-            // Logic for the dark mode toggle button
-            if (darkModeToggle) {
-                darkModeToggle.addEventListener('click', (e) => {
-                    e.preventDefault(); // Prevent link from navigating
-                    document.body.classList.toggle('dark-mode');
-                    
-                    // Optional: Save user's theme preference in local storage
-                    if (document.body.classList.contains('dark-mode')) {
-                        localStorage.setItem('theme', '🌙 dark');
-                    } else {
-                        localStorage.setItem('theme', '☀️ light');
-                    }
-                });
-            }
-            
-            // Optional: Check for a saved theme preference when the page loads
-            if (localStorage.getItem('theme') === 'dark') {
-                document.body.classList.add('dark-mode');
-            }
-        });
-//*****************************************************************************************************

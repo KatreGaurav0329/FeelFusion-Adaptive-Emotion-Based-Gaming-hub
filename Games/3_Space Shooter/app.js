@@ -9,25 +9,25 @@ const confidenceScore = document.getElementById('confidenceScore');
 // Define emotion-color mappings
 const emotionColors = {
   happy: {
-    color: '#005F73', // A deep, rich teal-blue, like a vibrant but dark nebula
+    color: '#005F73'
   },
   sad: {
-    color: '#1A2C38', // A very dark, desaturated blue-grey, almost black – the true void
+    color: '#1A2C38'
   },
   angry: {
-    color: '#8B0000', // A strong, dark blood-red, for a sense of menace or critical danger
+    color: '#8B0000'
   },
   surprised: {
-    color: '#806000', // A dark, antique gold or deep mustard, for a sudden, weighty revelation
+    color: '#806000'
   },
   fearful: {
-    color: '#4B0060', // A deep, unsettling royal purple, hinting at an alien, unknown threat
+    color: '#4B0060'
   },
   disgusted: {
-    color: '#2F4F4F', // A dark slate gray with a hint of green, evoking decay or something toxic
+    color: '#2F4F4F'
   },
   neutral: {
-    color: '#343A40', // A very dark charcoal grey, providing a solid, unassuming background
+    color: '#343A40'
   }
 };
 
@@ -40,13 +40,12 @@ const emotionSpeeds = {
   fearful:   { alienSpeed: 3.0, missileCooldown: 10 },
   disgusted: { alienSpeed: 2.9, missileCooldown: 11 }
 };
-// ^ Small 5-15% adjustments, not big jumps
 
 let currentAlienSpeed = 3;
 let targetAlienSpeed = 3;
 let currentMissileCooldown = 10;
 let targetMissileCooldown = 10;
-let lastEmotion = 'neutral';   // For change check
+let lastEmotion = 'neutral';   
 
 
 var gameStart = false;
@@ -941,7 +940,6 @@ function startVideo() {
     .catch(err => console.error(err));
 }
 
-// Function to get the emotion with highest confidence
 function getHighestEmotion(expressions) {
   const emotionKeys = Object.keys(expressions);
   const highestEmotionKey = emotionKeys.reduce((a, b) => 
@@ -953,7 +951,6 @@ function getHighestEmotion(expressions) {
   };
 }
 
-// UPDATED: Function to change background color AND update game speed based on emotion
 function changeBackgroundColor(emotion) {
   const colorData = emotionColors[emotion];
   document.body.style.backgroundColor = colorData ? colorData.color : emotionColors.neutral.color;
@@ -969,7 +966,6 @@ function displayDifficulty(emotion) {
   const difficultyDiv = document.getElementById('difficulty-display');
   if (!difficultyDiv) return;
 
-  const settings = emotionSpeeds[emotion] || emotionSpeeds.neutral;
 
   difficultyDiv.innerHTML = `
     <strong>Emotion:</strong> ${emotion.charAt(0).toUpperCase() + emotion.slice(1)}<br/>
@@ -978,35 +974,14 @@ function displayDifficulty(emotion) {
   `;
 }
 
-
-// Function to format emotion name for display
 function formatEmotionName(emotion) {
   return emotion.charAt(0).toUpperCase() + emotion.slice(1);
 }
-
-// Function to format confidence as percentage
 function formatConfidence(confidence) {
   return `${(confidence * 100).toFixed(1)}%`;
 }
 
-// Video event listener for emotion detection
 video.addEventListener('play', () => {
-  // Remove any existing canvas
-  /*const oldCanvas = document.querySelector('canvas');
-  if (oldCanvas) oldCanvas.remove();*/
-
-  // Wait for video to have dimensions
-  const displaySize = { width: video.videoWidth, height: video.videoHeight };
-  const canvas = faceapi.createCanvasFromMedia(video);
-  
-  // Position canvas to overlay the video
-  canvas.style.position = 'absolute';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-  canvas.style.borderRadius = '10px';
-  
-  document.querySelector('.video-container').appendChild(canvas);
-  faceapi.matchDimensions(canvas, displaySize);
 
   const detectionInterval = setInterval(async () => {
     const detections = await faceapi.detectAllFaces(
@@ -1014,15 +989,10 @@ video.addEventListener('play', () => {
       new faceapi.TinyFaceDetectorOptions()
     ).withFaceLandmarks().withFaceExpressions();
 
-    const resizedDetections = faceapi.resizeResults(detections, displaySize);
-    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-
-    // Extract and display emotions + change background + update game speed
     if (detections.length > 0) {
       const expressions = detections[0].expressions;
       const result = getHighestEmotion(expressions);
       
-      // Update emotion display
       emotionLabel.textContent = formatEmotionName(result.emotion);
       confidenceScore.textContent = `Confidence: ${formatConfidence(result.confidence)}`;
       

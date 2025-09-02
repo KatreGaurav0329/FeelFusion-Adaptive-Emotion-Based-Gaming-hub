@@ -13,29 +13,28 @@ const startMusic = new Audio('sounds/start.mp3');
 // Define emotion-color mappings
 const emotionColors = {
   happy: {
-    color: '#FFD700', // Gold: Bright, cheerful, and vibrant
+    color: '#00BFFF'
   },
   sad: {
-    color: '#5D85A6', // Steel Blue: A calm, muted blue for melancholy
+    color: '#08111eff'
   },
   angry: {
-    color: '#DC143C', // Crimson: A strong, aggressive red for anger
+    color: '#DC143C'
   },
   surprised: {
-    color: '#00BFFF', // Deep Sky Blue: A sudden, electrifying blue for surprise
+    color: '#FFD700'
   },
   fearful: {
-    color: '#4B0082', // Indigo: A dark, deep purple for a sense of foreboding
+    color: '#4B0082'
   },
   disgusted: {
-    color: '#556B2F', // Dark Olive Green: A muddy, unpleasant green
+    color: '#556B2F'
   },
   neutral: {
-    color: '#08111eff', // Dark Gray: A stable, non-intrusive default
+    color: '#5D85A6'
   }
 };
 
-// UPDATED: Emotion-based speed control instead of manual modes
 const emotionSpeeds = {
   neutral: { spawn: 700, max: 7, bombChance: 0.15 }, // Medium - default
   happy: { spawn: 600, max: 8, bombChance: 0.23 }, // Very fast - high energy
@@ -77,9 +76,6 @@ let fruits = [],
   bombBlastRadius = 4;
 let spawnIntervalId = null,
   currentDifficulty = 'easy';
-
-
-//document.body.style.cursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="24">🗡️</text></svg>'), auto`;
 
 class GameObject {
   constructor(x, y, r) {
@@ -496,44 +492,21 @@ function displayDifficulty(emotion) {
   `;
 }
 
-
-// Function to format emotion name for display
 function formatEmotionName(emotion) {
   return emotion.charAt(0).toUpperCase() + emotion.slice(1);
 }
 
-// Function to format confidence as percentage
 function formatConfidence(confidence) {
   return `${(confidence * 100).toFixed(1)}%`;
 }
 
-// Video event listener for emotion detection
-let lastEmotion = null; // Declare lastEmotion outside the interval to persist its value
+let lastEmotion = null;
 video.addEventListener('play', () => {
-  /*// Remove any existing canvas
-  const oldCanvas = document.querySelector('canvas');
-  if (oldCanvas) oldCanvas.remove();*/
-
-  // Wait for video to have dimensions
-  const displaySize = { width: video.videoWidth, height: video.videoHeight };
-  const canvas = faceapi.createCanvasFromMedia(video);
-
-  /*canvas.style.position = 'absolute';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-  canvas.style.borderRadius = '10px';*/
-
-  document.querySelector('.video-container').appendChild(canvas);
-  faceapi.matchDimensions(canvas, displaySize);
-
   const detectionInterval = setInterval(async () => {
     const detections = await faceapi.detectAllFaces(
       video,
       new faceapi.TinyFaceDetectorOptions()
     ).withFaceLandmarks().withFaceExpressions();
-
-    const resizedDetections = faceapi.resizeResults(detections, displaySize);
-    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
 
     // Extract and display emotions + change background + update game speed
     if (detections.length > 0) {
@@ -565,45 +538,5 @@ video.addEventListener('play', () => {
         lastEmotion = 'neutral';
       }
     }
-  }, 1000);
+  }, 500);
 });
-
-
-//********************** *changes for  for navigation ****************************
-document.addEventListener('DOMContentLoaded', () => {
-
-  // --- Navigation Menu Logic ---
-  const menuToggle = document.querySelector('.menu-toggle');
-  const navMenu = document.querySelector('.nav-menu');
-
-  if (menuToggle && navMenu) {
-    menuToggle.addEventListener('click', () => {
-      menuToggle.classList.toggle('active');
-      navMenu.classList.toggle('active');
-    });
-  }
-
-  // --- Dark Mode Toggle Logic ---
-  const darkModeToggle = document.querySelector('#darkModeToggle');
-  const body = document.body;
-
-  if (darkModeToggle) {
-    darkModeToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      body.classList.toggle('dark-mode');
-
-      // Optional: Update button text/icon based on mode
-      if (body.classList.contains('dark-mode')) {
-        darkModeToggle.innerHTML = '☀️ Light Mode';
-        darkModeToggle.setAttribute('aria-label', 'Toggle Light Mode');
-      } else {
-        darkModeToggle.innerHTML = '🌙 Dark Mode';
-        darkModeToggle.setAttribute('aria-label', 'Toggle Dark Mode');
-      }
-    });
-  }
-  
-
-
-});
-//***************************************************************************************************** 

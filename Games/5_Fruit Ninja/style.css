@@ -7,23 +7,7 @@
 :root {
   --font-primary: 'Poppins', sans-serif;
   --font-game: 'Exo 2', sans-serif;
-  --font-display: 'Amatic SC', cursive;
-
-  /* Light Mode */
-  --bg-light: #e8efff;
-  --text-light: #1c2a4a;
-  --header-bg-light: rgba(255, 255, 255, 0.6);
-  --primary-accent-light: #0d3ddc;
-  --secondary-accent-light: #263f7c;
-
-  /* Dark Mode */
-  --bg-dark: #0d1117;
-  --text-dark: #c9d1d9;
-  --header-bg-dark: rgba(22, 27, 34, 0.65);
-  --primary-accent-dark: #58a6ff;
-  --secondary-accent-dark: #88c0ff;
-
-  
+  --font-display: 'Amatic SC', cursive;  
 }
 
 *,
@@ -45,10 +29,6 @@ body {
   touch-action: manipulation;
 }
 
-body.dark-mode {
-  background-color: var(--bg-dark);
-  color: var(--text-dark);
-}
 
 .home {
   padding: 10px 20px;
@@ -66,9 +46,6 @@ body.dark-mode {
   background-color: rgba(0, 0, 0, 1.6); /* dark overlay */
   border-color: #666;                  /* lighter border on hover */
 }
-
-
-
 
 /* --- Main Content Layout --- */
 .main-content {

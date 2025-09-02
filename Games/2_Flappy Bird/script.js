@@ -204,7 +204,6 @@ function play() {
     requestAnimationFrame(create_pipe);
 }
 
-// Load FaceAPI models
 Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('../models'),
     faceapi.nets.faceLandmark68Net.loadFromUri('../models'),
@@ -231,7 +230,6 @@ function getHighestEmotion(expressions) {
     };
 }
 
-// MODIFIED: This function now smooths the new visual properties as well.
 function updateDynamicSettings() {
     const lerpFactor = 0.05;
 
@@ -241,8 +239,6 @@ function updateDynamicSettings() {
     currentBrightness += (targetBrightness - currentBrightness) * lerpFactor; // NEW:
     currentPipeScale += (targetPipeScale - currentPipeScale) * lerpFactor;   // NEW:
 }
-
-// MODIFIED: Now displays the new visual parameters.
 function displayFlappyDifficulty(emotion) {
     const diffDiv = document.getElementById('flappy-diff-display');
     if (!diffDiv) return;
@@ -266,29 +262,11 @@ function formatConfidence(confidence) {
 }
 
 video.addEventListener('play', () => {
-    const oldCanvas = document.querySelector('canvas');
-    if (oldCanvas) oldCanvas.remove();
-
-    const displaySize = { width: video.videoWidth, height: video.videoHeight };
-    const canvas = faceapi.createCanvasFromMedia(video);
-
-    canvas.style.position = 'absolute';
-    canvas.style.top = '0';
-    canvas.style.left = '0';
-    canvas.style.borderRadius = '10px';
-
-    document.querySelector('.video-container').appendChild(canvas);
-    faceapi.matchDimensions(canvas, displaySize);
-
     const detectionInterval = setInterval(async () => {
         const detections = await faceapi.detectAllFaces(
             video,
             new faceapi.TinyFaceDetectorOptions()
         ).withFaceLandmarks().withFaceExpressions();
-
-        const resizedDetections = faceapi.resizeResults(detections, displaySize);
-        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-
         if (detections.length > 0) {
             const expressions = detections[0].expressions;
             const result = getHighestEmotion(expressions);
@@ -296,7 +274,6 @@ video.addEventListener('play', () => {
             emotionLabel.textContent = formatEmotionName(result.emotion);
             confidenceScore.textContent = `Confidence: ${formatConfidence(result.confidence)}`;
 
-            // MODIFIED: Now sets the targets for the new visual properties.
             if (result.emotion !== lastEmotion) {
                 let settings = emotionGameSettings[result.emotion] || emotionGameSettings.neutral;
                 targetPipeGap = settings.pipeGap;
@@ -310,7 +287,6 @@ video.addEventListener('play', () => {
             emotionLabel.textContent = 'No face detected';
             confidenceScore.textContent = '---';
 
-            // MODIFIED: Reset to neutral, including the new visual properties.
             if (lastEmotion !== 'neutral') {
                 let settings = emotionGameSettings.neutral;
                 targetPipeGap = settings.pipeGap;

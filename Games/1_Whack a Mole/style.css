@@ -1,4 +1,3 @@
-/* === Root Variables & Base (From Header) === */
 :root {
   --font-primary: 'Poppins', sans-serif;
   --font-display: 'Amatic SC', cursive;
@@ -12,21 +11,6 @@
   --primary-accent-light: #0d3ddc;
   --secondary-accent-light: #263f7c;
   --glow-color-light: rgba(76, 116, 255, 0.5);
-
-  /* Dark Mode Palette */
-  --bg-color-dark: #0d1117;
-  --bg-gradient-dark: linear-gradient(135deg, #0d1117 0%, #161e3d 100%);
-  --text-color-dark: #c9d1d9;
-  --header-bg-dark: rgba(22, 27, 34, 0.65);
-  --card-bg-dark: rgba(22, 27, 34, 0.5);
-  --primary-accent-dark: #58a6ff;
-  --secondary-accent-dark: #88c0ff;
-  --glow-color-dark: rgba(88, 166, 255, 0.6);
-
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.1);
-  --shadow-lg-light: 0 10px 40px rgba(76, 116, 255, 0.2);
-  --shadow-lg-dark: 0 0 25px rgba(88, 166, 255, 0.25);
 
   /* For animated background */
   --sky-color: #22a4d8;
@@ -53,15 +37,6 @@ body {
   /* Background is handled by the animated-background div */
   background-color: #101426;
 }
-
-/* Dark Mode Body adjustments */
-body.dark-mode {
-  background-color: var(--bg-color-dark);
-  color: var(--text-color-dark);
-}
-
-/* === Header & Navigation === */
-
 
 /* === Animated Background Styles === */
 .animated-background {
@@ -161,7 +136,7 @@ body.dark-mode {
 /* === Video and Emotion Sidebar === */
 .video-container {
   position: fixed;
-  top: 120px;
+  top: 20px;
   left: 30px;
   width: 300px;
   height: 240px;
@@ -192,7 +167,7 @@ canvas {
 
 .emotion-display {
   position: fixed;
-  top: 380px;
+  top: 280px;
   left: 30px;
   width: 300px;
   background: linear-gradient(135deg, rgba(87, 139, 255, 0.85), rgba(255, 121, 198, 0.85));
@@ -205,11 +180,6 @@ canvas {
   z-index: 901;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
-body.dark-mode .emotion-display {
-  background: var(--header-bg-dark);
-  border-bottom: 1px solid rgba(88, 166, 255, 0.2);
-}
-
 
 .emotion-label {
   font-size: 1.4rem;
@@ -238,17 +208,12 @@ body.dark-mode .emotion-display {
   padding: 10px 16px;
   border-radius: 12px;
   position: fixed;
-  top: 120px;
+  top: 20px;
   right: 20px;
   z-index: 1002;
   color: #000000cc;
   font-weight: 600;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-}
-
-body.dark-mode .speed-display {
-  background: var(--header-bg-dark);
-  border-bottom: 1px solid rgba(88, 166, 255, 0.2);
 }
 
 .main-content .game-title {
@@ -362,48 +327,6 @@ body.dark-mode .speed-display {
   top: 0;
 }
 
-/* === Footer === */
-footer {
-  text-align: center;
-  padding: 1.5rem 1rem;
-  user-select: none;
-  background: var(--header-bg-light);
-  backdrop-filter: blur(10px);
-  color: var(--secondary-accent-light);
-  font-weight: 500;
-  font-size: 0.95rem;
-  border-top: 1px solid rgba(120, 150, 200, 0.2);
-  
-  /* Align with main content */
-}
-
-body.dark-mode footer {
-  background: var(--header-bg-dark);
-  color: var(--text-color-dark);
-  border-top: 1px solid rgba(88, 166, 255, 0.2);
-}
-
-footer .footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.footer-nav {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.footer-nav a {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
 /* === Keyframe Animations === */
 @keyframes slide {
   0% {
@@ -443,115 +366,5 @@ footer .footer-content {
 
   .emotion-display {
     top: auto;
-    /* Reset fixed positioning */
-  }
-}
-
-@media (max-width: 768px) {
-  .nav-menu {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 70%;
-    height: 100vh;
-    background: var(--header-bg-light);
-    backdrop-filter: blur(25px);
-    padding-top: 6rem;
-    transform: translateX(100%);
-    transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1);
-    z-index: 1000;
-  }
-
-  body.dark-mode .nav-menu {
-    background: var(--header-bg-dark);
-  }
-
-  .nav-menu.active {
-    transform: translateX(0);
-  }
-
-  nav ul {
-    flex-direction: column;
-    align-items: center;
-    gap: 2.5rem;
-  }
-
-  nav li a {
-    font-size: 1.5rem;
-  }
-
-  .menu-toggle {
-    display: block;
-    width: 28px;
-    height: 22px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    z-index: 1001;
-  }
-
-  .menu-toggle span {
-    display: block;
-    width: 100%;
-    height: 3px;
-    background-color: var(--primary-accent-light);
-    border-radius: 3px;
-    position: absolute;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
-
-  body.dark-mode .menu-toggle span {
-    background-color: var(--primary-accent-dark);
-  }
-
-  .menu-toggle span:nth-child(1) {
-    top: 0;
-  }
-
-  .menu-toggle span:nth-child(2) {
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .menu-toggle span:nth-child(3) {
-    bottom: 0;
-  }
-
-  .menu-toggle.active span:nth-child(1) {
-    transform: translateY(9.5px) rotate(45deg);
-  }
-
-  .menu-toggle.active span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .menu-toggle.active span:nth-child(3) {
-    transform: translateY(-9.5px) rotate(-45deg);
-  }
-}
-
-@media (max-width: 700px) {
-  .game {
-    width: 95vw;
-    height: 55vw;
-    padding: 0.8rem;
-  }
-
-  .main-content .game-title {
-    font-size: 1.8rem;
-  }
-
-  .controls select,
-  .controls button {
-    font-size: 1rem;
-    padding: 0.5em 1em;
-  }
-}
-
-@media (max-width: 600px) {
-  footer .footer-content {
-    flex-direction: column;
-    justify-content: center;
   }
 }

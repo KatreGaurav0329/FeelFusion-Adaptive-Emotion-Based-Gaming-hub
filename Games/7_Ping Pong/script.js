@@ -6,36 +6,28 @@ const colorInfo = document.getElementById('colorInfo');
 // Define emotion-color mappings based on research
 const emotionColors = {
   happy: { 
-    color: '#1dadd5ff', // Gold/Yellow
-    name: 'Golden Yellow (Joy)'
+    color: '#1dadd5ff'
   },
   sad: { 
-    color: '#4682B4', // Steel Blue
-    name: 'Steel Blue (Sadness)'
+    color: '#4682B4'
   },
   angry: { 
-    color: '#7818b8ff', // Crimson Red
-    name: 'Crimson Red (Anger)'
+    color: '#7818b8ff'
   },
   surprised: { 
-    color: '#9370DB', // Medium Purple
-    name: 'Medium Purple (Surprise)'
+    color: '#9370DB'
   },
   fearful: { 
-    color: '#483D8B', // Dark Slate Blue
-    name: 'Dark Purple (Fear)'
+    color: '#483D8B'
   },
   disgusted: { 
-    color: '#1e3261ff', // Olive Green
-    name: 'Olive Green (Disgust)'
+    color: '#1e3261ff'
   },
   neutral: { 
-    color: '#515fb7ff', // Light Gray
-    name: 'Light Gray (Neutral)'
+    color: '#515fb7ff'
   }
 };
 
-// Import audio functions and elements from audio.js
 import {
     playSound,
     startBackgroundMusicRotation,
@@ -607,7 +599,6 @@ function startVideo() {
     .catch(err => console.error(err));
 }
 
-// Function to get the emotion with highest confidence
 function getHighestEmotion(expressions) {
   const emotionKeys = Object.keys(expressions);
   const highestEmotionKey = emotionKeys.reduce((a, b) => 
@@ -619,81 +610,41 @@ function getHighestEmotion(expressions) {
   };
 }
 
-// Function to change background color based on emotion
 function changeBackgroundColor(emotion) {
   const colorData = emotionColors[emotion];
   if (colorData) {
-    // Smoothly transition background color
     document.body.style.backgroundColor = colorData.color;
-    
-    
-    
-    // Optional: Log color change for debugging
-    console.log(`Background changed to ${colorData.name} for emotion: ${emotion}`);
   } else {
     // Default to neutral if emotion not found
     document.body.style.backgroundColor = emotionColors.neutral.color;
-    colorInfo.textContent = `Background: ${emotionColors.neutral.name}`;
   }
 }
 
-// Function to format emotion name for display
 function formatEmotionName(emotion) {
   return emotion.charAt(0).toUpperCase() + emotion.slice(1);
 }
-
-// Function to format confidence as percentage
 function formatConfidence(confidence) {
   return `${(confidence * 100).toFixed(1)}%`;
 }
 
 video.addEventListener('play', () => {
-  // Remove any existing canvas
-  //const oldCanvas = document.querySelector('canvas');
-  //if (oldCanvas) oldCanvas.remove();
-
-  // Wait for video to have dimensions
-  const displaySize = { width: video.videoWidth, height: video.videoHeight };
-  //const canvas = faceapi.createCanvasFromMedia(video);
-  
-  // Position canvas to overlay the video
-  /*canvas.style.position = 'absolute';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-  canvas.style.borderRadius = '10px';*/
-  
-  /*document.querySelector('.video-container').appendChild(canvas);
-  faceapi.matchDimensions(canvas, displaySize);*/
-
   const detectionInterval = setInterval(async () => {
     const detections = await faceapi.detectAllFaces(
       video, 
       new faceapi.TinyFaceDetectorOptions()
     ).withFaceLandmarks().withFaceExpressions();
 
-    const resizedDetections = faceapi.resizeResults(detections, displaySize);
-    //canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw face detection overlays
-   /* faceapi.draw.drawDetections(canvas, resizedDetections);
-    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
-    faceapi.draw.drawFaceExpressions(canvas, resizedDetections);*/
-
-    // Extract and display emotions + change background
     if (detections.length > 0) {
       const expressions = detections[0].expressions;
       const result = getHighestEmotion(expressions);
       
-      // Update emotion display
       emotionLabel.textContent = formatEmotionName(result.emotion);
       confidenceScore.textContent = `Confidence: ${formatConfidence(result.confidence)}`;
       
-      // Change background color based on detected emotion
       changeBackgroundColor(result.emotion);
     } else {
       emotionLabel.textContent = 'No face detected';
       confidenceScore.textContent = '---';
-      // Reset to neutral color when no face is detected
       changeBackgroundColor('neutral');
     }
   }, 500);

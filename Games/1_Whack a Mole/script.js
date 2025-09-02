@@ -11,109 +11,56 @@ const startBtn = document.getElementById("startBtn");
 const endBtn = document.getElementById("endBtn");
 const modeSel = document.getElementById("mode");
 
-// After DOM load
 document.addEventListener('DOMContentLoaded', () => {
-  // Insert default speed if desired
   const speedEl = document.getElementById('speedValue');
   if (speedEl) speedEl.textContent = '–';
 });
-
-
-
-//********************** *changes for  for navigation ****************************
-document.addEventListener('DOMContentLoaded', () => {
-
-  // --- Navigation Menu Logic ---
-  const menuToggle = document.querySelector('.menu-toggle');
-  const navMenu = document.querySelector('.nav-menu');
-
-  if (menuToggle && navMenu) {
-    menuToggle.addEventListener('click', () => {
-      menuToggle.classList.toggle('active');
-      navMenu.classList.toggle('active');
-    });
-  }
-
-  // --- Dark Mode Toggle Logic ---
-  const darkModeToggle = document.querySelector('#darkModeToggle');
-  const body = document.body;
-
-  if (darkModeToggle) {
-    darkModeToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      body.classList.toggle('dark-mode');
-
-      // Optional: Update button text/icon based on mode
-      if (body.classList.contains('dark-mode')) {
-        darkModeToggle.innerHTML = '☀️ Light Mode';
-        darkModeToggle.setAttribute('aria-label', 'Toggle Light Mode');
-      } else {
-        darkModeToggle.innerHTML = '🌙 Dark Mode';
-        darkModeToggle.setAttribute('aria-label', 'Toggle Dark Mode');
-      }
-    });
-  }
-  
-
-
-});
-//***************************************************************************************************** 
 
 // Game state variables
 let lastHole;
 let timeUp = false;
 let score = 0;
 let peepTimer = null;
-let currentEmotion = 'neutral'; // Track current emotion for speed control
+let currentEmotion = 'neutral'; 
 
-let currentSpeed = { min: 800, max: 1000 }; // Start with neutral speed
+let currentSpeed = { min: 800, max: 1000 }; 
 let targetSpeed = { min: 800, max: 1000 };
 let transitionSpeed = 0.05;
 
-// Define emotion-color mappings
 const emotionColors = {
   happy: { 
-    color: '#04e7f7ff', // Gold/Yellow
-    name: 'Golden Yellow (Joy)'
+    color: '#04e7f7ff'
   },
   sad: { 
-    color: '#557c7eff', // Steel Blue
-    name: 'Steel Blue (Sadness)'
+    color: '#557c7eff'
   },
   angry: { 
-    color: '#0c76daff', // Crimson Red
-    name: 'Crimson Red (Anger)'
+    color: '#0c76daff'
   },
   surprised: { 
-    color: '#05ffdeff', // Medium Purple
-    name: 'Medium Purple (Surprise)'
+    color: '#05ffdeff'
   },
   fearful: { 
-    color: '#2977ddff', // Dark Slate Blue
-    name: 'Dark Purple (Fear)'
+    color: '#2977ddff'
   },
   disgusted: { 
-    color: '#1a29f7ec', // Olive Green
-    name: 'Olive Green (Disgust)'
+    color: '#1a29f7ec'
   },
   neutral: { 
-    color: '#11c6fde8', // Light Gray
-    name: 'Light Gray (Neutral)'
+    color: '#11c6fde8'
   }
 };
 
-// UPDATED: Emotion-based speed control instead of manual modes
 const emotionSpeeds = {
-  happy: { min: 300, max: 500 },      // Very fast - high energy
-  surprised: { min: 400, max: 600 },  // Fast - excitement
-  angry: { min: 500, max: 800 },      // Medium-fast - intensity
+  happy: { min: 500, max: 700 },      // Very fast - high energy
+  surprised: { min: 600, max: 800 },  // Fast - excitement
+  angry: { min: 800, max: 1000 },      // Medium-fast - intensity
   neutral: { min: 900, max: 1200 },   // Medium - default
   fearful: { min: 1000, max: 1400 },  // Slow - anxiety
   disgusted: { min: 1300, max: 1600 }, // Slower - negative emotion
   sad: { min: 1500, max: 1800 }       // Slowest - low energy
 };
 
-// Keep original modeSpeeds as fallback (optional)
 const modeSpeeds = {
   "super-easy": { min: 1600, max: 1800 },
   easy: { min: 1200, max: 1500 },
@@ -126,7 +73,6 @@ function lerp(start, end, factor) {
   return start + (end - start) * factor;
 }
 
-// Function to smoothly transition between speeds
 function updateGameSpeed() {
   currentSpeed.min = lerp(currentSpeed.min, targetSpeed.min, transitionSpeed);
   currentSpeed.max = lerp(currentSpeed.max, targetSpeed.max, transitionSpeed);
@@ -138,11 +84,9 @@ function updateGameSpeed() {
   }
 }
 
-// Modified peep function to use current speed
 function peep() {
   if (timeUp) return;
   
-  // Use the gradually changing current speed
   const { min, max } = currentSpeed;
   const time = randomTime(min, max);
   const hole = randomHole(holes);
@@ -154,7 +98,6 @@ function peep() {
   }, time);
 }
 
-// Whack-a-mole game functions
 function randomTime(min, max) {
   return Math.round(Math.random() * (max - min) + min);
 }
@@ -166,8 +109,6 @@ function randomHole(holes) {
   lastHole = hole;
   return hole;
 }
-
-
 
 function startGame() {
   scoreBoard.textContent = 0;
@@ -193,7 +134,6 @@ function bonk(e) {
   const mole = this;
   mole.classList.remove("up");
 
-  // Create the bang image
   const bang = document.createElement('img');
   bang.src = './assets/bang.png';
   bang.className = 'bang-effect';
@@ -205,10 +145,8 @@ function bonk(e) {
   bang.style.pointerEvents = 'none';
   bang.style.zIndex = '10';
 
-  // Add bang image to the mole's parent (the .hole)
   mole.parentElement.appendChild(bang);
 
-  // Remove bang after 1 second
   setTimeout(() => {
     if (bang.parentElement) bang.parentElement.removeChild(bang);
   }, 1000);
@@ -242,94 +180,54 @@ function getHighestEmotion(expressions) {
   };
 }
 
-// UPDATED: Function to change background color AND update game speed based on emotion
-// NEW, SAFER, AND CORRECTED VERSION
 function changeBackgroundColor(emotion) {
-  // Use a fallback to 'neutral' if the emotion isn't in our color map or is undefined
   const emotionKey = (emotion && emotionColors[emotion]) ? emotion : 'neutral';
-  
   const colorData = emotionColors[emotionKey];
   const speedData = emotionSpeeds[emotionKey];
 
-  // 1. Update the background color using the CSS variable
   if (colorData && colorData.color) {
     document.documentElement.style.setProperty('--sky-color', colorData.color);
   }
 
-  // 2. Update the color info text, ONLY if the element exists
-  if (colorInfo && colorData && colorData.name) {
-    // This safety check prevents the script from crashing
-    colorInfo.textContent = `Background: ${colorData.name}`;
-  }
-
-  // 3. Update the game speed
   if (speedData) {
     targetSpeed = speedData;
   }
 
-  // This log is safe because targetSpeed is always defined
   console.log(`Target speed set to: ${targetSpeed.min}-${targetSpeed.max}ms for emotion: ${emotionKey}`);
 }
 
-// Function to format emotion name for display
 function formatEmotionName(emotion) {
   return emotion.charAt(0).toUpperCase() + emotion.slice(1);
 }
 
-// Function to format confidence as percentage
 function formatConfidence(confidence) {
   return `${(confidence * 100).toFixed(1)}%`;
 }
 
-// Video event listener for emotion detection
 video.addEventListener('play', () => {
-  // Remove any existing canvas
-  const oldCanvas = document.querySelector('canvas');
-  if (oldCanvas) oldCanvas.remove();
-
-  // Wait for video to have dimensions
-  const displaySize = { width: video.videoWidth, height: video.videoHeight };
-  const canvas = faceapi.createCanvasFromMedia(video);
-  
-  // Position canvas to overlay the video
-  canvas.style.position = 'absolute';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-  canvas.style.borderRadius = '10px';
-  
-  document.querySelector('.video-container').appendChild(canvas);
-  faceapi.matchDimensions(canvas, displaySize);
-
   const detectionInterval = setInterval(async () => {
     const detections = await faceapi.detectAllFaces(
       video, 
       new faceapi.TinyFaceDetectorOptions()
     ).withFaceLandmarks().withFaceExpressions();
 
-    const resizedDetections = faceapi.resizeResults(detections, displaySize);
-    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-
     // Extract and display emotions + change background + update game speed
     if (detections.length > 0) {
       const expressions = detections[0].expressions;
       const result = getHighestEmotion(expressions);
       
-      // Update emotion display
       emotionLabel.textContent = formatEmotionName(result.emotion);
       confidenceScore.textContent = `Confidence: ${formatConfidence(result.confidence)}`;
       
-      // Change background color and update game speed based on detected emotion
       changeBackgroundColor(result.emotion);
     } else {
       emotionLabel.textContent = 'No face detected';
       confidenceScore.textContent = '---';
-      // Reset to neutral color and speed when no face is detected
       changeBackgroundColor('neutral');
     }
-  }, 100);
+  }, 500);
 });
 
-// Event listeners for whack-a-mole game
 moles.forEach(mole => mole.addEventListener("click", bonk));
 startBtn.addEventListener("click", startGame);
 endBtn.addEventListener("click", endGame);
@@ -339,7 +237,6 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 
-// Start the game loop after DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
   gameLoop();
 });

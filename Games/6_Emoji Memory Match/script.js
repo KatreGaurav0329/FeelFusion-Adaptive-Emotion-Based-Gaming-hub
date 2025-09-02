@@ -4,15 +4,15 @@ const confidenceScore = document.getElementById('confidenceScore');
 const colorInfo = document.getElementById('colorInfo');
 const emotionColors = {
   happy: { 
-    color: '#075aacb0', // Gold/Yellow
+    color: '#1a9cddff', // Gold/Yellow
     name: 'Golden Yellow (Joy)'
   },
   sad: { 
-    color: '#4d2ca2ff', // Steel Blue
+    color: '#00c9d7ff', // Steel Blue
     name: 'Steel Blue (Sadness)'
   },
   angry: { 
-    color: '#cd262689', // Crimson Red
+    color: '#1088f189', // Crimson Red
     name: 'Crimson Red (Anger)'
   },
   surprised: { 
@@ -24,11 +24,11 @@ const emotionColors = {
     name: 'Dark Purple (Fear)'
   },
   disgusted: { 
-    color: '#14b46eff', // Olive Green
+    color: '#1f8559ff', // Olive Green
     name: 'Olive Green (Disgust)'
   },
   neutral: { 
-    color: '#0c0833af', // Light Gray
+    color: '#208dd5af', // Light Gray
     name: 'Light Gray (Neutral)'
   }
 };
@@ -78,28 +78,6 @@ const expressionQuotes = {
   ]
 };
 
-//set dynamic difficulty
-function setDifficultyByEmotion(emotion) {
-    let newDifficulty;
-    if (emotion === "happy") {
-        newDifficulty = "hard";
-    } else if (emotion === "sad") {
-        newDifficulty = "easy";
-    } else if (emotion === "neutral") {
-        newDifficulty = "medium";
-    } else if (emotion === "angry" || emotion === "disgusted" || emotion === "fearful" || emotion === "surprised") {
-        // Set your logical default for other emotions, e.g., medium
-        newDifficulty = "medium";
-    } else {
-        newDifficulty = currentDifficulty; // fallback, no change
-    }
-    if (currentDifficulty !== newDifficulty) {
-        currentDifficulty = newDifficulty;
-        initGame();
-    }
-}
-
-
 // 1) Track last shown emotion and last update time
 let lastEmotion = null;
 let lastQuoteTime = 0;
@@ -113,8 +91,6 @@ function updateExpressionPopup(emotion) {
   }
   lastEmotion = emotion;
   lastQuoteTime = now;
-  setDifficultyByEmotion(emotion);
-
 
   const popup = document.getElementById('expression-popup');
   const quotes = expressionQuotes[emotion] || expressionQuotes.neutral;
@@ -355,15 +331,10 @@ function getHighestEmotion(expressions) {
 function changeBackgroundColor(emotion) {
   const colorData = emotionColors[emotion];
   if (colorData) {
-    // Smoothly transition background color
     document.body.style.backgroundColor = colorData.color;
     
-    // Optional: Log color change for debugging
-    console.log(`Background changed to ${colorData.name} for emotion: ${emotion}`);
   } else {
-    // Default to neutral if emotion not found
     document.body.style.backgroundColor = emotionColors.neutral.color;
-    colorInfo.textContent = `Background: ${emotionColors.neutral.name}`;
   }
 }
 
@@ -378,22 +349,7 @@ function formatConfidence(confidence) {
 }
 
 video.addEventListener('play', () => {
-  // Remove any existing canvas
-  const oldCanvas = document.querySelector('canvas');
-  if (oldCanvas) oldCanvas.remove();
-
-  // Wait for video to have dimensions
-  const displaySize = { width: video.videoWidth, height: video.videoHeight };
-  const canvas = faceapi.createCanvasFromMedia(video);
   
-  // Position canvas to overlay the video
-  canvas.style.position = 'absolute';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-  canvas.style.borderRadius = '10px';
-  
-  document.querySelector('.video-container').appendChild(canvas);
-  faceapi.matchDimensions(canvas, displaySize);
 
   const detectionInterval = setInterval(async () => {
     const detections = await faceapi.detectAllFaces(
@@ -401,15 +357,6 @@ video.addEventListener('play', () => {
       new faceapi.TinyFaceDetectorOptions()
     ).withFaceLandmarks().withFaceExpressions();
 
-    const resizedDetections = faceapi.resizeResults(detections, displaySize);
-    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw face detection overlays
-   /* faceapi.draw.drawDetections(canvas, resizedDetections);
-    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
-    faceapi.draw.drawFaceExpressions(canvas, resizedDetections);*/
-
-    // Extract and display emotions + change background
     if (detections.length > 0) {
       const expressions = detections[0].expressions;
       const result = getHighestEmotion(expressions);

@@ -13,9 +13,11 @@
   
   <!-- STYLESHEET -->
   <link rel="stylesheet" href="style.css">
+  <!-- JAVASCRIPT FILES -->
+  <script defer src="../face-api.min.js"></script>
+  <script defer src="script.js"></script>
 </head>
 <body>
-
 
   <body>
   <div class="animated-background">
@@ -24,41 +26,35 @@
     <div class="cloud cloud-3"></div>
     <div class="hill hill-back"></div>
     <div class="hill hill-front"></div>
-
   </div>
   </body>
 
-  <!-- Main container for your page content -->
   <div class="container">
+    <div class="video-container">
+      <video id="video" autoplay muted></video>
+    </div>
+    <div class="emotion-display">
+      <div class="emotion-label" id="emotionLabel">No face detected</div>
+      <div class="confidence-score" id="confidenceScore">---</div>
+    </div>
+    <div class="main-content">
+      <h2 class="game-title">Whack-a-Mole! <span class="score"> 0 </span></h2>
+      <div class="speed-display">
+        Speed: <span id="speedValue">–</span> ms
+      </div>
       
-      <!-- Video and emotion UI -->
-      <div class="video-container">
-        <video id="video" autoplay muted></video>
+      <div class="controls">
+        <select id="mode" hidden>
+          <option value="super-easy">Super Easy</option>
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+          <option value="super-hard">Super Hard</option>
+        </select>
+        <button  onclick="window.location.href='../../index.html'">🏠 Home</button>
+        <button id="startBtn">Start</button>
+        <button id="endBtn" disabled>End</button>
       </div>
-      <div class="emotion-display">
-        <div class="emotion-label" id="emotionLabel">No face detected</div>
-        <div class="confidence-score" id="confidenceScore">---</div>
-      </div>
-
-      <!-- Whack-a-Mole Game Content -->
-      <div class="main-content">
-        <h2 class="game-title">Whack-a-Mole! <span class="score"> 0 </span></h2>
-        <div class="speed-display">
-          Speed: <span id="speedValue">–</span> ms
-        </div>
-        
-        <div class="controls">
-          <select id="mode" hidden>
-            <option value="super-easy">Super Easy</option>
-            <option value="easy">Easy</option>
-            <option value="medium" selected>Medium</option>
-            <option value="hard">Hard</option>
-            <option value="super-hard">Super Hard</option>
-          </select>
-          <button  onclick="window.location.href='../../index.html'">🏠 Home</button>
-          <button id="startBtn">Start</button>
-          <button id="endBtn" disabled>End</button>
-        </div>
         
         <div class="game">
           <div class="hole hole1"><div class="mole"></div></div>
@@ -71,11 +67,5 @@
       </div>
   </div>
 
-  
-
-  <!-- JAVASCRIPT FILES -->
-  <script src="../face-api.min.js"></script>
-  <script src="script.js"></script>
-  
 </body>
 </html>
