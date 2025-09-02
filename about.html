@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About FeelFusion | How It Works</title>
+    <meta name="description" content="Learn about the mission of FeelFusion and the cutting-edge technology used to create adaptive gaming experiences.">
+    <link rel="icon" type="image/png" href="/images/FeelFusion light logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div id="particles-js"></div>
+
+    <header>
+        <div class="logo-area">
+            <a href="index.html" aria-label="Go to Homepage">
+                <img src="images/FeelFusion light logo.png" alt="FeelFusion logo light" class="logo-light" />
+                <img src="images/FeelFusion dark logo.jpg" alt="FeelFusion logo dark" class="logo-dark" />
+            </a>
+            <h1><a href="index.html">FeelFusion</a></h1>
+        </div>
+        <nav class="nav-menu" aria-label="Primary Navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="#" id="darkModeToggle" aria-label="Toggle Dark Mode">🌙 Dark Mode</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" aria-label="Toggle Navigation Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <main class="container page-container" id="main-content" tabindex="-1">
+        <h2 class="page-title">Our Technology & Mission</h2>
+        <div class="text-content">
+            <h3>What is FeelFusion?</h3>
+            <p>FeelFusion is more than just a gaming website; it's an experiment in empathetic technology. We believe that games can be more immersive and personal when they respond not just to our clicks and keystrokes, but to our genuine emotions. Our platform serves as a showcase for this vision, offering classic arcade games reimagined with an emotional twist.</p>
+            
+            <h3>How The Magic Works</h3>
+            <p>The core of FeelFusion is a powerful, browser-based machine learning library called <strong>face-api.js</strong>, which runs on the TensorFlow.js engine. Here’s a simple breakdown of the process:</p>
+            <ol>
+                <li><strong>Webcam Access:</strong> With your permission, the website accesses your webcam feed.</li>
+                <li><strong>Local Analysis:</strong> Our script analyzes the video feed in real-time, directly within your browser. It identifies key facial landmarks to detect expressions like happiness, surprise, or a neutral state.</li>
+                <li><strong>Privacy is Paramount:</strong> This is the most important step. The video feed is <strong>never</strong> sent to a server, recorded, or stored. All the "magic" happens and stays on your computer.</li>
+                <li><strong>Adaptive Gameplay:</strong> The detected emotion is translated into a gameplay variable. A smile might increase the speed in *Whack-a-Mole*, while a focused, neutral expression might make obstacles in *Flappy Bird* more challenging.</li>
+            </ol>
+            
+            <h3>Our Mission</h3>
+            <p>Our goal is to explore the future of interactive entertainment. We aim to create experiences that are more intuitive, accessible, and emotionally resonant. We hope FeelFusion inspires both players and developers to think differently about the connection between humans and technology.</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 FeelFusion — Built with 💡 and 😄.</p>
+            <nav class="footer-nav" aria-label="Footer Navigation">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

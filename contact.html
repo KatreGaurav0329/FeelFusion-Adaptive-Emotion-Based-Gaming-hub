@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact Us | FeelFusion</title>
+    <meta name="description" content="Get in touch with the FeelFusion team. We'd love to hear your feedback or answer any questions you may have.">
+    <link rel="icon" type="image/png" href="/images/FeelFusion light logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="particles-js"></div>
+
+    <header>
+        <div class="logo-area">
+            <a href="index.html" aria-label="Go to Homepage">
+                <img src="images/FeelFusion light logo.png" alt="FeelFusion logo light" class="logo-light" />
+                <img src="images/FeelFusion dark logo.jpg" alt="FeelFusion logo dark" class="logo-dark" />
+            </a>
+            <h1><a href="index.html">FeelFusion</a></h1>
+        </div>
+        <nav class="nav-menu" aria-label="Primary Navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="#" id="darkModeToggle" aria-label="Toggle Dark Mode">🌙 Dark Mode</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" aria-label="Toggle Navigation Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <main class="container page-container" id="main-content" tabindex="-1">
+        <h2 class="page-title">Get In Touch</h2>
+        <div class="text-content">
+            <p>Have a question, feedback, or a brilliant idea? We'd love to hear from you. Fill out the form below or email us directly.</p>
+        </div>
+        
+        <form class="contact-form" action="https://formspree.io/f/YOUR_UNIQUE_ID" method="POST">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="6" required></textarea>
+            </div>
+            <button type="submit" class="btn-play form-submit-btn">Send Message</button>
+        </form>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 FeelFusion — Built with 💡 and 😄.</p>
+            <nav class="footer-nav" aria-label="Footer Navigation">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
