@@ -20,21 +20,23 @@
   </div>
     <div id="welcomeScreen" class="welcome-screen">
         <h2>Welcome to Pong!</h2>
-        <input type="text" id="playerNameInput" placeholder="Enter your name (optional)" maxlength="15">
-        <button id="startGameButton">Play Game</button>
+        <input type="text" id="playerNameInput" placeholder="Enter your name (optional)" maxlength="15" hidden><br>
+        <button id="startGameButton">Play Game</button><br>
+        <button  onclick="window.location.href='../../index.html'">🏠 Home</button>
     </div>
 
     <div id="gameOverScreen" class="game-over-screen">
         <h2 id="gameOverMessage"></h2>
-        <button id="playAgainButton">Play Again</button>
+        <button id="playAgainButton">Play Again</button><br>
+        <button  onclick="window.location.href='../../index.html'">🏠 Home</button>
     </div>
 
     <h1>Pong Game</h1>
     <div class="game-controls">
-        
+        <button  onclick="window.location.href='../../index.html'">🏠 Home</button>
         <button id="pauseButton">Pause</button>
-        <label for="difficulty">Difficulty:</label>
-        <select id="difficulty">
+        <label for="difficulty" hidden>Difficulty:</label>
+        <select id="difficulty" hidden>
             <option value="easy">Easy</option>
             <option value="medium" selected>Medium</option>
             <option value="hard">Hard</option>

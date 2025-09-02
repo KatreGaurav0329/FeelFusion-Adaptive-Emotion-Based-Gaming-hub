@@ -4,55 +4,55 @@ const emotionLabel = document.getElementById('emotionLabel');
 const confidenceScore = document.getElementById('confidenceScore');
 
 const emotionGameSettings = {
-  neutral: {
-    pipeGap: 35,
-    pipeSpeed: 3,
-    pipeFrequency: 115,
-    brightness: 1,      // NEW: Normal brightness
-    pipeScale: 1,       // NEW: Normal pipe length
-  },
-  happy: {
-    pipeGap: 30,
-    pipeSpeed: 4,
-    pipeFrequency: 100,
-    brightness: 1.2,    // NEW: Brighter background
-    pipeScale: 1.1,     // NEW: Longer pipes
-  },
-  sad: {
-    pipeGap: 45,
-    pipeSpeed: 2.5,
-    pipeFrequency: 130,
-    brightness: 0.65,   // NEW: Dimmer background
-    pipeScale: 0.85,    // NEW: Shorter pipes
-  },
-  angry: {
-    pipeGap: 40,
-    pipeSpeed: 3.5,
-    pipeFrequency: 110,
-    brightness: 0.85,   // NEW: Slightly darker, intense feel
-    pipeScale: 1.15,    // NEW: Longer, more imposing pipes
-  },
-  surprised: {
-    pipeGap: 32,
-    pipeSpeed: 4.2,
-    pipeFrequency: 95,
-    brightness: 1.15,   // NEW: Bright flash of surprise
-    pipeScale: 1.05,    // NEW: Slightly longer pipes
-  },
-  fearful: {
-    pipeGap: 38,
-    pipeSpeed: 3,
-    pipeFrequency: 120,
-    brightness: 0.7,    // NEW: Darker, more ominous
-    pipeScale: 0.9,     // NEW: Shorter, less threatening pipes
-  },
-  disgusted: {
-    pipeGap: 42,
-    pipeSpeed: 2.8,
-    pipeFrequency: 125,
-    brightness: 0.8,    // NEW: Muted, dull colors
-    pipeScale: 0.95,    // NEW: Slightly shorter pipes
-  }
+    neutral: {
+        pipeGap: 35,
+        pipeSpeed: 3,
+        pipeFrequency: 115,
+        brightness: 1,      // NEW: Normal brightness
+        pipeScale: 1,       // NEW: Normal pipe length
+    },
+    happy: {
+        pipeGap: 30,
+        pipeSpeed: 4,
+        pipeFrequency: 100,
+        brightness: 1.2,    // NEW: Brighter background
+        pipeScale: 1.1,     // NEW: Longer pipes
+    },
+    sad: {
+        pipeGap: 45,
+        pipeSpeed: 2.5,
+        pipeFrequency: 130,
+        brightness: 0.65,   // NEW: Dimmer background
+        pipeScale: 0.85,    // NEW: Shorter pipes
+    },
+    angry: {
+        pipeGap: 40,
+        pipeSpeed: 3.5,
+        pipeFrequency: 110,
+        brightness: 0.85,   // NEW: Slightly darker, intense feel
+        pipeScale: 1.15,    // NEW: Longer, more imposing pipes
+    },
+    surprised: {
+        pipeGap: 32,
+        pipeSpeed: 4.2,
+        pipeFrequency: 95,
+        brightness: 1.15,   // NEW: Bright flash of surprise
+        pipeScale: 1.05,    // NEW: Slightly longer pipes
+    },
+    fearful: {
+        pipeGap: 38,
+        pipeSpeed: 3,
+        pipeFrequency: 120,
+        brightness: 0.7,    // NEW: Darker, more ominous
+        pipeScale: 0.9,     // NEW: Shorter, less threatening pipes
+    },
+    disgusted: {
+        pipeGap: 42,
+        pipeSpeed: 2.8,
+        pipeFrequency: 125,
+        brightness: 0.8,    // NEW: Muted, dull colors
+        pipeScale: 0.95,    // NEW: Slightly shorter pipes
+    }
 };
 
 // Start with neutral config
@@ -89,7 +89,7 @@ img.style.display = 'none';
 message.classList.add('messageStyle');
 
 document.addEventListener('keydown', (e) => {
-    if(e.key == 'Enter' && game_state != 'Play'){
+    if (e.key == 'Enter' && game_state != 'Play') {
         document.querySelectorAll('.pipe_sprite').forEach((e) => {
             e.remove();
         });
@@ -104,9 +104,9 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-function play(){
-    function move(){
-        if(game_state != 'Play') return;
+function play() {
+    function move() {
+        if (game_state != 'Play') return;
 
         updateDynamicSettings();
         displayFlappyDifficulty(lastEmotion || 'neutral');
@@ -122,18 +122,18 @@ function play(){
             let pipe_sprite_props = element.getBoundingClientRect();
             bird_props = bird.getBoundingClientRect();
 
-            if(pipe_sprite_props.right <= 0){
+            if (pipe_sprite_props.right <= 0) {
                 element.remove();
-            }else{
-                if(bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width && bird_props.left + bird_props.width > pipe_sprite_props.left && bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height && bird_props.top + bird_props.height > pipe_sprite_props.top){
+            } else {
+                if (bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width && bird_props.left + bird_props.width > pipe_sprite_props.left && bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height && bird_props.top + bird_props.height > pipe_sprite_props.top) {
                     game_state = 'End';
-                    message.innerHTML = 'Game Over'.fontcolor('red') + '<br>Press Enter To Restart';
+                    message.innerHTML = 'Game Over'.fontcolor('red') + '<br>Press Enter To Restart ' + "<button  onclick=window.location.href='../../index.html'>🏠 Home</button>";
                     message.classList.add('messageStyle');
                     img.style.display = 'none';
                     sound_die.play();
                     return;
-                }else{
-                    if(pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + currentPipeSpeed >= bird_props.left && element.increase_score == '1'){
+                } else {
+                    if (pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + currentPipeSpeed >= bird_props.left && element.increase_score == '1') {
                         score_val.innerHTML = +score_val.innerHTML + 1;
                         sound_point.play();
                     }
@@ -146,23 +146,23 @@ function play(){
     requestAnimationFrame(move);
 
     let bird_dy = 0;
-    function apply_gravity(){
-        if(game_state != 'Play') return;
+    function apply_gravity() {
+        if (game_state != 'Play') return;
         bird_dy = bird_dy + grativy;
         document.addEventListener('keydown', (e) => {
-            if(e.key == 'ArrowUp' || e.key == ' '){
+            if (e.key == 'ArrowUp' || e.key == ' ') {
                 img.src = 'images/Bird-2.png';
                 bird_dy = -7.6;
             }
         });
 
         document.addEventListener('keyup', (e) => {
-            if(e.key == 'ArrowUp' || e.key == ' '){
+            if (e.key == 'ArrowUp' || e.key == ' ') {
                 img.src = 'images/Bird.png';
             }
         });
 
-        if(bird_props.top <= 0 || bird_props.bottom >= background_props.bottom){
+        if (bird_props.top <= 0 || bird_props.bottom >= background_props.bottom) {
             game_state = 'End';
             message.style.left = '28vw';
             window.location.reload();
@@ -177,10 +177,10 @@ function play(){
 
     let pipe_seperation = 0;
 
-    function create_pipe(){
-        if(game_state != 'Play') return;
+    function create_pipe() {
+        if (game_state != 'Play') return;
 
-        if(pipe_seperation > currentPipeFrequency){
+        if (pipe_seperation > currentPipeFrequency) {
             pipe_seperation = 0;
 
             let pipe_posi = Math.floor(Math.random() * 43) + 8;
@@ -222,7 +222,7 @@ function startVideo() {
 
 function getHighestEmotion(expressions) {
     const emotionKeys = Object.keys(expressions);
-    const highestEmotionKey = emotionKeys.reduce((a, b) => 
+    const highestEmotionKey = emotionKeys.reduce((a, b) =>
         expressions[a] > expressions[b] ? a : b
     );
     return {
@@ -268,21 +268,21 @@ function formatConfidence(confidence) {
 video.addEventListener('play', () => {
     const oldCanvas = document.querySelector('canvas');
     if (oldCanvas) oldCanvas.remove();
-    
+
     const displaySize = { width: video.videoWidth, height: video.videoHeight };
     const canvas = faceapi.createCanvasFromMedia(video);
-    
+
     canvas.style.position = 'absolute';
     canvas.style.top = '0';
     canvas.style.left = '0';
     canvas.style.borderRadius = '10px';
-    
+
     document.querySelector('.video-container').appendChild(canvas);
     faceapi.matchDimensions(canvas, displaySize);
 
     const detectionInterval = setInterval(async () => {
         const detections = await faceapi.detectAllFaces(
-            video, 
+            video,
             new faceapi.TinyFaceDetectorOptions()
         ).withFaceLandmarks().withFaceExpressions();
 
@@ -292,10 +292,10 @@ video.addEventListener('play', () => {
         if (detections.length > 0) {
             const expressions = detections[0].expressions;
             const result = getHighestEmotion(expressions);
-            
+
             emotionLabel.textContent = formatEmotionName(result.emotion);
             confidenceScore.textContent = `Confidence: ${formatConfidence(result.confidence)}`;
-            
+
             // MODIFIED: Now sets the targets for the new visual properties.
             if (result.emotion !== lastEmotion) {
                 let settings = emotionGameSettings[result.emotion] || emotionGameSettings.neutral;

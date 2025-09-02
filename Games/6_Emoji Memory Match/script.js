@@ -4,25 +4,32 @@ const confidenceScore = document.getElementById('confidenceScore');
 const colorInfo = document.getElementById('colorInfo');
 const emotionColors = {
   happy: { 
-    color: '#1a9cddff' 
+    color: '#075aacb0', // Gold/Yellow
+    name: 'Golden Yellow (Joy)'
   },
   sad: { 
-    color: '#00c9d7ff'
+    color: '#4d2ca2ff', // Steel Blue
+    name: 'Steel Blue (Sadness)'
   },
   angry: { 
-    color: '#1088f189'
+    color: '#cd262689', // Crimson Red
+    name: 'Crimson Red (Anger)'
   },
   surprised: { 
-    color: '#6e32e7ff' 
+    color: '#6e32e7ff', // Medium Purple
+    name: 'Medium Purple (Surprise)'
   },
   fearful: { 
-    color: '#350b6fff'
+    color: '#350b6fff', // Dark Slate Blue
+    name: 'Dark Purple (Fear)'
   },
   disgusted: { 
-    color: '#1f8559ff'
+    color: '#14b46eff', // Olive Green
+    name: 'Olive Green (Disgust)'
   },
   neutral: { 
-    color: '#208dd5af'
+    color: '#0c0833af', // Light Gray
+    name: 'Light Gray (Neutral)'
   }
 };
 
@@ -71,6 +78,28 @@ const expressionQuotes = {
   ]
 };
 
+//set dynamic difficulty
+function setDifficultyByEmotion(emotion) {
+    let newDifficulty;
+    if (emotion === "happy") {
+        newDifficulty = "hard";
+    } else if (emotion === "sad") {
+        newDifficulty = "easy";
+    } else if (emotion === "neutral") {
+        newDifficulty = "medium";
+    } else if (emotion === "angry" || emotion === "disgusted" || emotion === "fearful" || emotion === "surprised") {
+        // Set your logical default for other emotions, e.g., medium
+        newDifficulty = "medium";
+    } else {
+        newDifficulty = currentDifficulty; // fallback, no change
+    }
+    if (currentDifficulty !== newDifficulty) {
+        currentDifficulty = newDifficulty;
+        initGame();
+    }
+}
+
+
 // 1) Track last shown emotion and last update time
 let lastEmotion = null;
 let lastQuoteTime = 0;
@@ -84,6 +113,8 @@ function updateExpressionPopup(emotion) {
   }
   lastEmotion = emotion;
   lastQuoteTime = now;
+  setDifficultyByEmotion(emotion);
+
 
   const popup = document.getElementById('expression-popup');
   const quotes = expressionQuotes[emotion] || expressionQuotes.neutral;

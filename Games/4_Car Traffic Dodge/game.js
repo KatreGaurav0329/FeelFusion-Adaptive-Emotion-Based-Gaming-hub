@@ -20,34 +20,37 @@ const restartBtn = document.getElementById('restartBtn');
 const restartBtn2 = document.getElementById('restartBtn2');
 const finalScore = document.getElementById('finalScore');
 
+let screenShake = { magnitude: 0, duration: 0, time: 0 };
+let previousEmotionConfig = null;
+
 const emotionColors = {
   happy: { 
-    color: '#62ff00ff', // Gold/Yellow
-    name: 'Golden Yellow (Joy)'
+    color: '#031943ff', 
+    name: '(Joy)'
   },
   sad: { 
     color: '#46b491ff', // Steel Blue
-    name: 'Steel Blue (Sadness)'
+    name: '(Sadness)'
   },
   angry: { 
-    color: '#07b430ff', // Crimson Red
-    name: 'Crimson Red (Anger)'
+    color: '#a12d19ff', // Crimson Red
+    name: '(Anger)'
   },
   surprised: { 
-    color: '#9370DB', // Medium Purple
-    name: 'Medium Purple (Surprise)'
+    color: '#2e1d45ff', // Medium Purple
+    name: '(Surprise)'
   },
   fearful: { 
-    color: '#267e40ff', // Dark Slate Blue
-    name: 'Dark Purple (Fear)'
+    color: '#b4b6b5ff', // Dark Slate Blue
+    name: '(Fear)'
   },
   disgusted: { 
-    color: '#6B8E23', // Olive Green
-    name: 'Olive Green (Disgust)'
+    color: '#434a33ff', // Olive Green
+    name: '(Disgust)'
   },
   neutral: { 
-    color: '#8ada11af', // Light Gray
-    name: 'Light Gray (Neutral)'
+    color: '#222224af', // Light Gray
+    name: '(Neutral)'
   }
 };
 
@@ -70,10 +73,10 @@ let cameraMode = 'classic';
 
 const emotionSpeeds = {
   neutral: { obstacleSpeed: 4, spawnRate: 1300, maxObstacles: 3, lanes: 4 },   // Medium - default
-  happy: { obstacleSpeed: 5, spawnRate: 1000, maxObstacles: 4, lanes: 5 },      // Very fast - high energy
+  happy: { obstacleSpeed: 6, spawnRate: 1000, maxObstacles: 5, lanes: 5 },      // Very fast - high energy
   sad: { obstacleSpeed: 3, spawnRate: 1700, maxObstacles: 2, lanes: 3 } ,      // Slowest - low energy
   angry: { obstacleSpeed: 5, spawnRate: 1500, maxObstacles: 3, lanes: 4 },      // Medium-fast - intensity
-  fearful: { obstacleSpeed: 6, spawnRate: 1400, maxObstacles: 3, lanes: 4 },  // Slow - anxiety
+  fearful: { obstacleSpeed: 4, spawnRate: 1400, maxObstacles: 3, lanes: 4 },  // Slow - anxiety
   surprised: { obstacleSpeed: 7, spawnRate: 1300, maxObstacles: 4, lanes: 5 },  // Fast - excitement
   disgusted: { obstacleSpeed: 7, spawnRate: 1200, maxObstacles: 5, lanes: 4 }, // Slower - negative emotion
 };
@@ -127,8 +130,8 @@ function resetCar() {
 }
 
 function updateHUD() {
-  scoreEl.textContent = score;
-  chancesEl.textContent = chances;
+    scoreEl.textContent = String(score);
+    chancesEl.textContent = '❤️'.repeat(Math.min(chances, 5)) || '💔';
 }
 
 // ======= UI HANDLERS =======
@@ -143,18 +146,43 @@ function hideMenus() {
 // ======= GAME LOOP =======
 function gameLoop(ts) {
   if (!gameRunning || paused) return;
-  
-  // Smooth obstacle speed transition
+
+  // --- Smooth obstacle speed transition ---
   currentObstacleSpeed += (targetObstacleSpeed - currentObstacleSpeed) * 0.05;
   modeConfig.obstacleSpeed = currentObstacleSpeed;
+
+  // --- Screen Shake (if active) ---
+  let shakeX = 0, shakeY = 0;
+  if (screenShake.duration > 0) {
+    screenShake.duration--;
+    screenShake.time++;
+    shakeX = (Math.random() - 0.5) * 2 * screenShake.magnitude;
+    shakeY = (Math.random() - 0.5) * 2 * screenShake.magnitude;
+    ctx.save();
+    ctx.translate(shakeX, shakeY);
+  }
+
+  // --- Graphics Rendering ---
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawRoad(tick);
   handleCarControls();
   drawCar(carX, carY, carLean, carBounce);
   handleObstacles(ts);
+
+  // --- End Screen Shake Transform ---
+  if (screenShake.duration > 0) {
+    ctx.restore();
+    if (screenShake.duration <= 0) {
+      screenShake.magnitude = 0;
+      screenShake.time = 0;
+    }
+  }
+
   tick++;
   animationFrameId = requestAnimationFrame(gameLoop);
 }
+
+
 
 function handleCarControls() {
   let move = 0;
@@ -195,58 +223,66 @@ function handleCarControls() {
 }
 
 // ======= DRAWING FUNCTIONS =======
-function drawRoad(tick) {
-  ctx.save();
-  // Camera angle
-  let camY = 0, camScale = 1;
-  if (cameraMode === 'low') {
-    camY = 70; camScale = 1.08;
-  }
-  if (cameraMode === 'high') {
-    camY = -50; camScale = 0.93;
-  }
-  ctx.translate(canvas.width/2, camY);
-  ctx.scale(camScale, camScale);
-  ctx.translate(-canvas.width/2, 0);
 
-  // Road base
-  ctx.fillStyle = "#fff";
-  ctx.roundRect(roadX, roadY, roadWidth, roadHeight, 32);
-  ctx.fill();
-
-  // Lane lines
-  ctx.strokeStyle = "#e5e5e5";
-  ctx.lineWidth = 4;
-  ctx.setLineDash([28, 22]);
-  for (let i = 1; i < laneCount; i++) {
-    ctx.beginPath();
-    let x = roadX + (i * roadWidth / laneCount);
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, canvas.height);
-    ctx.stroke();
-  }
-  ctx.setLineDash([]);
-
-  // Animated center line
-  ctx.strokeStyle = "#bdbdbd";
-  ctx.lineWidth = 6;
-  ctx.setLineDash([40, 40]);
-  let offset = (tick * modeConfig.obstacleSpeed * 1.2) % 80;
-  ctx.beginPath();
-  ctx.moveTo(roadX + roadWidth/2, -80 + offset);
-  ctx.lineTo(roadX + roadWidth/2, canvas.height + 80);
-  ctx.stroke();
-  ctx.setLineDash([]);
-
-  ctx.restore();
+function triggerScreenShake(magnitude = 10, duration = 15) {
+    screenShake = { magnitude, duration, time: 0 };
 }
+
+function drawRoad(tt) {
+    const speed = currentObstacleSpeed;
+    
+    // Road Asphalt
+    ctx.fillStyle = '#34495E'; // Dark asphalt
+    ctx.fillRect(roadX, roadY, roadWidth, roadHeight);
+
+    // Kerbs (Curbs)
+    ctx.fillStyle = '#BDBDBD';
+    ctx.fillRect(roadX - 5, 0, 5, canvas.height);
+    ctx.fillRect(roadX + roadWidth, 0, 5, canvas.height);
+
+    // Lane Lines
+    ctx.strokeStyle = '#BDC3C7'; // Light gray
+    ctx.lineWidth = Math.max(2, roadWidth * 0.01);
+    ctx.setLineDash([30, 30]);
+    const lineOffset = (tt * speed) % 60;
+    ctx.lineDashOffset = -lineOffset;
+
+    for (let i = 1; i < laneCount; i++) {
+        const x = roadX + (i * roadWidth / laneCount);
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+    }
+    
+    // Center Line (Yellow)
+    if (laneCount > 1) {
+        ctx.strokeStyle = '#BDC3C7'; // Yellow
+        ctx.lineWidth = Math.max(3, roadWidth * 0.015);
+        ctx.setLineDash([20, 40]);
+        const centerLineOffset = (tt * speed) % 60;
+        ctx.lineDashOffset = -centerLineOffset;
+
+        const centerX = roadX + roadWidth / 2;
+        ctx.beginPath();
+        ctx.moveTo(centerX, 0);
+        ctx.lineTo(centerX, canvas.height);
+        ctx.stroke();
+    }
+    
+    ctx.setLineDash([]); // Reset line dash
+}
+
+
+
+
 
 function drawCar(x, y, lean, bounce) {
   ctx.save();
   // Camera angle
   let camY = 0, camScale = 1;
   if (cameraMode === 'low') { camY = 70; camScale = 1.08; }
-  if (cameraMode === 'high') { camY = -50; camScale = 0.93; }
+  if (cameraMode === 'high') { camY = -40; camScale = 0.93; }
   ctx.translate(canvas.width/2, camY);
   ctx.scale(camScale, camScale);
   ctx.translate(-canvas.width/2, 0);
@@ -267,7 +303,7 @@ function drawCar(x, y, lean, bounce) {
   ctx.save();
   ctx.shadowColor = "rgba(0,0,0,0.07)";
   ctx.shadowBlur = 16;
-  ctx.fillStyle = "#1976d2";
+  ctx.fillStyle = "#ff00e1ff";
   ctx.beginPath();
   ctx.roundRect(-carWidth/2, -carHeight/2, carWidth, carHeight, 18);
   ctx.fill();
@@ -363,6 +399,7 @@ function handleObstacles(ts) {
     ) {
       obstacles.splice(i, 1);
       chances--;
+      triggerScreenShake();
       updateHUD();
       if (chances <= 0) {
         endGame();
@@ -383,13 +420,15 @@ function spawnObstacle() {
   // Place in random lane
   let lane = Math.floor(Math.random() * laneCount);
   let x = roadX + ((lane + 0.5) * roadWidth / laneCount) - carWidth / 2;
-  const colors = ["#e53935", "#8e24aa", "#43a047", "#ffb300", "#039be5"];
+  const colors = ["#e53935", "#671e7bff", "#43a047", "#ffb300", "#039be5"];
   const color = colors[Math.floor(Math.random() * colors.length)];
   obstacles.push({ x: x, y: -carHeight, color });
 }
 
 // ======= GAME STATE HANDLERS =======
 function startGame() {
+  if (animationFrameId) 
+    cancelAnimationFrame(animationFrameId);
   score = 0;
   chances = 3;
   obstacles = [];
@@ -549,26 +588,64 @@ function changeBackgroundColor(emotion) {
 }
 function updateGameDifficulty(emotion) {
   if (!gameRunning || paused) return;
-  
+
   const emotionConfig = emotionSpeeds[emotion] || emotionSpeeds.neutral;
-  
+
+  // Detect changes compared to previousEmotionConfig
+  let changes = [];
+  if (previousEmotionConfig) {
+    if (emotionConfig.obstacleSpeed !== previousEmotionConfig.obstacleSpeed)
+      changes.push(`Obstacle Speed: ${previousEmotionConfig.obstacleSpeed} → ${emotionConfig.obstacleSpeed}`);
+    if (emotionConfig.spawnRate !== previousEmotionConfig.spawnRate)
+      changes.push(`Spawn Rate: ${previousEmotionConfig.spawnRate} → ${emotionConfig.spawnRate}`);
+    if (emotionConfig.maxObstacles !== previousEmotionConfig.maxObstacles)
+      changes.push(`Max Obstacles: ${previousEmotionConfig.maxObstacles} → ${emotionConfig.maxObstacles}`);
+    if (emotionConfig.lanes !== previousEmotionConfig.lanes)
+      changes.push(`Lanes: ${previousEmotionConfig.lanes} → ${emotionConfig.lanes}`);
+  }
+
   // Set target values for smooth transition
   targetObstacleSpeed = emotionConfig.obstacleSpeed;
   modeConfig.spawnRate = emotionConfig.spawnRate; // This can change instantly
   modeConfig.maxObstacles = emotionConfig.maxObstacles;
-  
+
   // Handle lane changes (still instant for better UX)
   if (modeConfig.lanes !== emotionConfig.lanes) {
     modeConfig.lanes = emotionConfig.lanes;
     laneCount = modeConfig.lanes;
     resizeCanvas();
-    
+
     if (carLane >= laneCount) {
       carLane = Math.floor(laneCount / 2);
       carX = roadX + ((carLane + 0.5) * roadWidth / laneCount) - carWidth / 2;
     }
   }
+
+  // Display the changes (if any) to the player
+  if (changes.length > 0) {
+    showDifficultyChangeMessage(changes);
+  }
+
+  previousEmotionConfig = { ...emotionConfig };
 }
+const diffMsgEl = document.getElementById('difficultyChangeMessage');
+let diffMsgTimeout;
+
+function showDifficultyChangeMessage(changes) {
+  if (!diffMsgEl) return;
+
+  diffMsgEl.innerHTML = 'Difficulty changed:<br>' + changes.join('<br>');
+  diffMsgEl.classList.add('show');
+
+  // Clear previous timeout if any
+  if (diffMsgTimeout) clearTimeout(diffMsgTimeout);
+
+  // Hide message after 4 seconds
+  diffMsgTimeout = setTimeout(() => {
+    diffMsgEl.classList.remove('show');
+  }, 4000);
+}
+
 
 
 // Function to format emotion name for display
@@ -580,31 +657,15 @@ function formatEmotionName(emotion) {
 function formatConfidence(confidence) {
   return `${(confidence * 100).toFixed(1)}%`;
 }
-
+let detectionInterval = null;
 video.addEventListener('play', () => {
-  // Remove any existing canvas
-
-  // Wait for video to have dimensions
-  const displaySize = { width: video.videoWidth, height: video.videoHeight };
-  const canvas = faceapi.createCanvasFromMedia(video);
-  
-  // Position canvas to overlay the video
-  canvas.style.position = 'absolute';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-  canvas.style.borderRadius = '10px';
-  
-  document.querySelector('.video-container').appendChild(canvas);
-  faceapi.matchDimensions(canvas, displaySize);
-
-  const detectionInterval = setInterval(async () => {
+  if (detectionInterval) 
+    clearInterval(detectionInterval);
+  detectionInterval = setInterval(async () => {
     const detections = await faceapi.detectAllFaces(
       video, 
       new faceapi.TinyFaceDetectorOptions()
     ).withFaceLandmarks().withFaceExpressions();
-
-    const resizedDetections = faceapi.resizeResults(detections, displaySize);
-    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
 
     // Extract and display emotions + change background + update game speed
     if (detections.length > 0) {
@@ -629,3 +690,4 @@ video.addEventListener('play', () => {
     }
   }, 1000);
 });
+

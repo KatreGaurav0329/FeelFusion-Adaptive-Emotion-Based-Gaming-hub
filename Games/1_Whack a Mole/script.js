@@ -18,6 +18,47 @@ document.addEventListener('DOMContentLoaded', () => {
   if (speedEl) speedEl.textContent = '–';
 });
 
+
+
+//********************** *changes for  for navigation ****************************
+document.addEventListener('DOMContentLoaded', () => {
+
+  // --- Navigation Menu Logic ---
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navMenu = document.querySelector('.nav-menu');
+
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+  }
+
+  // --- Dark Mode Toggle Logic ---
+  const darkModeToggle = document.querySelector('#darkModeToggle');
+  const body = document.body;
+
+  if (darkModeToggle) {
+    darkModeToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      body.classList.toggle('dark-mode');
+
+      // Optional: Update button text/icon based on mode
+      if (body.classList.contains('dark-mode')) {
+        darkModeToggle.innerHTML = '☀️ Light Mode';
+        darkModeToggle.setAttribute('aria-label', 'Toggle Light Mode');
+      } else {
+        darkModeToggle.innerHTML = '🌙 Dark Mode';
+        darkModeToggle.setAttribute('aria-label', 'Toggle Dark Mode');
+      }
+    });
+  }
+  
+
+
+});
+//***************************************************************************************************** 
+
 // Game state variables
 let lastHole;
 let timeUp = false;

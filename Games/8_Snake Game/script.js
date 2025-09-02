@@ -11,7 +11,7 @@ const emotionColors = {
     color: '#46b491ff'
   },
   angry: { 
-    color: '#23d5ab'
+    color: '#df0038ff'
   },
   surprised: { 
     color: '#9370DB'
@@ -23,7 +23,7 @@ const emotionColors = {
     color: '#6B8E23'
   },
   neutral: { 
-    color: '#e73c7e'
+    color: '#07a9d1ff'
   }
 };
 
@@ -48,6 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Game constants
     const CANVAS_SIZE = 400;
     const GRID_SIZE = 20;
+
+      // Create the audio objects here
+    const moveSound = new Audio('music/move.mp3');
+    const foodSound = new Audio('music/food.mp3');
+    const gameOverSound = new Audio('music/gameover.mp3');
 
     // Difficulty Modes
     const MODES = {
@@ -153,6 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
             scoreEl.textContent = score;
             // Note: Speed no longer increases automatically to keep difficulty consistent
             generateFood();
+
+             // Play the food sound
+              foodSound.play();
+
         } else {
             snake.pop();
         }
@@ -166,6 +175,10 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('snakeHighScore', highScore);
         }
         gameOverScreen.classList.remove('hidden');
+
+         // Play the game over sound
+          gameOverSound.play();
+
         document.addEventListener('keydown', returnToMenu);
     }
 
@@ -201,6 +214,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const lastDirection = inputBuffer.length > 0 ? inputBuffer[inputBuffer.length - 1] : direction;
         if ((newDirection === 'LEFT' && lastDirection === 'RIGHT') || (newDirection === 'RIGHT' && lastDirection === 'LEFT') || (newDirection === 'UP' && lastDirection === 'DOWN') || (newDirection === 'DOWN' && lastDirection === 'UP')) return;
         inputBuffer.push(newDirection);
+
+         // Play the move sound
+          moveSound.play();
     }
     document.addEventListener('keydown', changeDirection);
 
@@ -261,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.beginPath(); ctx.arc(eye2X, eye2Y, eyeRadius, 0, 2 * Math.PI); ctx.fill();
     }
 
-    function drawFood() {
+    /* function drawFood() {
          ctx.fillStyle = '#FF4136'; ctx.strokeStyle = '#FF851B'; ctx.lineWidth = 2;
          const foodX = food.x * GRID_SIZE, foodY = food.y * GRID_SIZE;
          ctx.beginPath(); ctx.arc(foodX + GRID_SIZE / 2, foodY + GRID_SIZE / 2, GRID_SIZE / 2.2, 0, 2 * Math.PI); ctx.fill(); ctx.stroke();
@@ -273,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
              newFoodPosition = { x: Math.floor(Math.random() * (CANVAS_SIZE / GRID_SIZE)), y: Math.floor(Math.random() * (CANVAS_SIZE / GRID_SIZE)) };
          } while (snake.some(part => part.x === newFoodPosition.x && part.y === newFoodPosition.y));
          food = newFoodPosition;
-     }
+     }*/
 
     function drawFood() {
         // Set the font size and alignment for the emoji
@@ -358,6 +374,10 @@ function displaySnakeDifficulty(emotion) {
   `;
 }
 
+
+
+
+
 // Function to format emotion name for display
 function formatEmotionName(emotion) {
   return emotion.charAt(0).toUpperCase() + emotion.slice(1);
@@ -396,6 +416,8 @@ video.addEventListener('play', () => {
 
       // Change background color and update game speed based on detected emotion
       changeBackgroundColor(result.emotion);
+      
+
 
       if (result.emotion !== lastEmotion) {
         displaySnakeDifficulty(lastEmotion);
@@ -413,3 +435,41 @@ video.addEventListener('play', () => {
     }
   }, 500);
 });
+
+//********************** *changes for  for navigation ****************************
+ document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+
+            // Logic for the hamburger menu
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', () => {
+                    // Toggle the menu's visibility
+                    navMenu.classList.toggle('nav-active');
+                    // Animate the hamburger icon
+                    menuToggle.classList.toggle('is-active');
+                });
+            }
+
+            // Logic for the dark mode toggle button
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent link from navigating
+                    document.body.classList.toggle('dark-mode');
+                    
+                    // Optional: Save user's theme preference in local storage
+                    if (document.body.classList.contains('dark-mode')) {
+                        localStorage.setItem('theme', '🌙 dark');
+                    } else {
+                        localStorage.setItem('theme', '☀️ light');
+                    }
+                });
+            }
+            
+            // Optional: Check for a saved theme preference when the page loads
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        });
+//*****************************************************************************************************

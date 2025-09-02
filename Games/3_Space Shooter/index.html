@@ -1,180 +1,120 @@
 <!DOCTYPE html>
-<html>
-	<head>
-    		<meta charset='utf-8'/>
-    		<title>Shooting Game</title>
-    		<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-			<script defer src="../face-api.min.js"></script>
-    		<script defer src='app.js'></script>
-		<link rel='stylesheet' href='style.css'>
-	</head>
-  	<body>
-		<div class="video-container">
-    <video id="video" width="320" height="240" autoplay muted></video>
-  </div>
-  
-  <div class="emotion-display">
-    <div class="emotion-label" id="emotionLabel">No face detected</div>
-    <div class="confidence-score" id="confidenceScore">---</div>
-  </div>
-  <div id="difficulty-display" style="
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: rgba(0,0,0,0.7);
-  color: white;
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  z-index: 2000;
-  min-width: 180px;
-">
-  Loading difficulty...
-</div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An intense space shooter that adapts its difficulty based on your facial expression using real-time emotion detection.">
+    <title>Emotion Strike 🚀 Space Shooter</title>
 
-		<div class='content'>
-			<div class='title'>
-				<img src='imgs/title.png' alt='title'>
-			</div>
-  			<canvas id='gameArea' width='750' height='500'></canvas>
-  			<table id='values'>
-	  			<tr>
-		  			<td id='score'></td> 
-		  			<td id='missiles'></td> 
-		  			<td id='shield'></td> 
-		  			<td id='bombs'></td> 
-	  			</tr>
-  			</table>
-  			<table id='labels'>
-	  			<tr>
-		  			<td id='score_label'>SCORE</td> 
-					<td><img src='imgs/missiles.png', alt='missiles'></td> 
-					<td><img src='imgs/shield.png', alt='shield'</td> 
-					<td><img src='imgs/bomb.png', alt='bomb'</td> 
-	  			</tr>
+    <link rel="icon" type="image/png" href="imgs/favicon.ico"/>
 
-  			</table>
-			<h3>CONTROLS</h3>
-  			<table id='controls'>
-	  			<tr>
-					<td class='control_label'>WASD</td> 
-					<td class='control_label'>SPACE</td> 
-					<td class='control_label'>SHIFT</td> 
-					<td class='control_label'>F<td> 
-	  			</tr>
-	  			<tr>
-		  			<td class='control_description'>MOVE SHIP</td> 
-		  			<td class='control_description'>FIRE MISSILES</td> 
-		  			<td class='control_description'>ACTIVATE SHIELD</td> 
-		  			<td class='control_description'>DROP BOMBS<td> 
-	  			</tr>
-	  			<tr>
-					<td class='control_label' colspan='4'>R / C</td> 
-	  			</tr>
-	  			<tr>
-					<td class='control_description' colspan='4'>RESTART AT WAVE 1 (R) OR 5-WAVE CHECKPOINT (C) ON GAME OVER</td> 
-	  			</tr>
-  			</table>
-			<h3 class='meet'>MEET THE CAST</h3>
-  			<table>
-	  			<tr>
-					<td class='cast top'><img src='imgs/red.png', alt='simple'></td> 
-					<td class='cast top'><img src='imgs/blue.png', alt='siney'</td> 
-					<td class='cast top'><img src='imgs/yellow.png', alt='crawly'</td> 
-					<td class='cast top'><img src='imgs/white.png', alt='fasty'</td> 
-					<td class='cast top last'><img src='imgs/green.png', alt='circley'</td> 
-	  			</tr>
-	  			<tr>
-					<td class='cast'>SIMPLE</td> 
-					<td class='cast'>SINEY</td> 
-					<td class='cast'>CRAWLEY</td> 
-					<td class='cast'>FASTY</td> 
-					<td class='cast last'>CIRCLEY</td> 
-	  			</tr>
-	  			<tr>
-					<td class='cast_description'>
-						<ul>
-							<li>BEHAVIOR</li>
-							<li class='description'>MARCHING BLINDLY FORWARD WITHOUT A CARE</li>
-							<li>LIKES</li>
-							<li class='description bullet'>* CHACHKIES</li>
-							<li class='description bullet'>* OVERLY SCENTED CANDLES</li>
-							<li class='description bullet'>* FAST FASHION</li>
-							<li class='description'>&nbsp</li>
-							<li>DISLIKES</li>
-							<li class='description bullet'>* BIG WORDS</li>
-							<li class='description bullet'>* DIFFICULT CONVERSATIONS</li>
-							<li class='description bullet'>* THE X AXIS</li>
-						</ul>
-					</td> 
-					<td class='cast_description'>
-						<ul>
-							<li>BEHAVIOR</li>
-							<li class='description'>BACK AND FORTH... FOREVER</li>
-							<li class='description'>&nbsp</li>
-							<li>LIKES</li>
-							<li class='description bullet'>* TUNING FORKS</li>
-							<li class='description bullet'>* METRONOMES</li>
-							<li class='description bullet'>* SURFING</li>
-							<li class='description'>&nbsp</li>
-							<li class='description'>&nbsp</li>
-							<li>DISLIKES</li>
-							<li class='description bullet'>* 90 DEGREE PHASE SHIFTS</li>
-							<li class='description bullet'>* STUPID OVERACHIEVER CIRCLEY</li>
-						</ul>
-					</td> 
-					<td class='cast_description'> 
-						<ul>
-							<li>BEHAVIOR</li>
-							<li class='description'>CREEPING ACROSS THE BOTTOM QUARTER</li>
-							<li class='description'>&nbsp</li>
-							<li>LIKES</li>
-							<li class='description bullet'>* STALKING</li>
-							<li class='description bullet'>* SHOWING UP UNINVITED</li>
-							<li class='description'>&nbsp</li>
-							<li class='description'>&nbsp</li>
-							<li>DISLIKES</li>
-							<li class='description bullet'>* RESTRAINING ORDERS</li>
-							<li class='description bullet'>* VERTICAL MOBILITY</li>
-						</ul>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
 
-					</td> 
-					<td class='cast_description'>
-						<ul>
-							<li>BEHAVIOR</li>
-							<li class='description'>GOING NOWHERE FAST</li>
-							<li class='description'>&nbsp</li>
-							<li class='description'>&nbsp</li>
-							<li>LIKES</li>
-							<li class='description bullet'>* AGGRESSIVE EXTROVERTS</li>
-							<li class='description bullet'>* MUSCLE CARS</li>
-							<li class='description bullet'>* BRAGGING ABOUT HIS SPEED</li>
-							<li>DISLIKES</li>
-							<li class='description bullet'>* BURNOUT</li>
-							<li class='description bullet'>* HANGOVERS</li>
-							<li class='description bullet'>* TURTLES</li>
-						</ul>
-					</td> 
-					<td class='cast_description last'> 
-						<ul>
-							<li>BEHAVIOR</li>
-							<li class='description'>WELL ROUNDED</li>
-							<li class='description'>&nbsp</li>
-							<li class='description'>&nbsp</li>
-							<li>LIKES</li>
-							<li class='description bullet'>* SINEY (IT'S <b>NOT</b> MUTUAL)</li>
-							<li class='description bullet'>* PIZZA</li>
-							<li class='description bullet'>* WORLD TRAVEL</li>
-							<li class='description'>&nbsp</li>
-							<li>DISLIKES</li>
-							<li class='description bullet'>* PLAID</li>
-							<li class='description bullet'>* CUBISM</li>
-							<li class='description bullet'>* BEING PUT IN A BOX</li>
-						</ul>
-					</td> 
-	  			</tr>
-  			</table>
-		</div>
-	</body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="../face-api.min.js"></script> 
+    <script defer src="app.js"></script>
+
+
+</head>
+<body>
+     
+    
+    <div class="page-wrapper">
+        <aside class="game-hud">
+            <button class="home" onclick="window.location.href='../../index.html'">🏠 Home</button>
+            <div class="video-container">
+                <video id="video" autoplay muted playsinline></video>
+            </div>
+          
+            <div class="emotion-display">
+                <div class="emotion-label" id="emotionLabel">Loading...</div>
+                <div class="confidence-score" id="confidenceScore">---</div>
+            </div>
+
+            <div id="difficulty-display" class="difficulty-display">
+                Connecting to ship...
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <section class="game-core">
+                 
+                <div class="title">
+                    <img src="imgs/title.png" alt="Emotion Strike Title">
+                </div>
+              
+                <canvas id="gameArea" width="750" height="500"></canvas>
+              
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">SCORE</span>
+                        <span id="score" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <img src="imgs/missiles.png" alt="Missiles Icon">
+                        <span id="missiles" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <img src="imgs/shield.png" alt="Shield Icon">
+                        <span id="shield" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <img src="imgs/bomb.png" alt="Bomb Icon">
+                        <span id="bombs" class="stat-value">0</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="game-info">
+                <h2>CONTROLS</h2>
+                <div class="controls-grid">
+                    <div class="control-item"><span>WASD</span> MOVE SHIP</div>
+                    <div class="control-item"><span>SPACE</span> FIRE MISSILES</div>
+                    <div class="control-item"><span>SHIFT</span> ACTIVATE SHIELD</div>
+                    <div class="control-item"><span>F</span> DROP BOMB</div>
+                    <div class="control-item full-width">
+                        <span>R / C</span> RESTART WAVE 1 (R) OR CHECKPOINT (C)
+                    </div>
+                </div>
+            </section>
+
+            <section class="game-info">
+                <h2>MEET THE HOSTILES</h2>
+                <div class="cast-grid">
+                    <div class="cast-card">
+                        <img src="imgs/red.png" alt="Simple Alien">
+                        <h3>SIMPLE</h3>
+                        <p>Marches blindly forward without a care in the universe.</p>
+                    </div>
+                    <div class="cast-card">
+                        <img src="imgs/blue.png" alt="Siney Alien">
+                        <h3>SINEY</h3>
+                        <p>Weaves back and forth... forever. Hates stupid overachiever Circley.</p>
+                    </div>
+                    <div class="cast-card">
+                        <img src="imgs/yellow.png" alt="Crawly Alien">
+                        <h3>CRAWLY</h3>
+                        <p>Creeps across the periphery. Dislikes restraining orders.</p>
+                    </div>
+                    <div class="cast-card">
+                        <img src="imgs/white.png" alt="Fasty Alien">
+                        <h3>FASTY</h3>
+                        <p>Going nowhere fast. Loves bragging about his speed.</p>
+                    </div>
+                    <div class="cast-card">
+                        <img src="imgs/green.png" alt="Circley Alien">
+                        <h3>CIRCLEY</h3>
+                        <p>A well-rounded individual. Dislikes being put in a box.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+   
+</body>
 </html>

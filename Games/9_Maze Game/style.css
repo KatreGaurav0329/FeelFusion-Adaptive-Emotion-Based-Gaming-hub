@@ -25,6 +25,23 @@ body {
   gap: 20px;
 }
 
+.home {
+  padding: 10px 20px;
+  background-color:  rgba(0, 0, 0, 0.6); /* fully transparent */
+  color: #fff;                   /* white text */
+  border: 2px solid #444;        /* dark border */
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);    /* glassy effect */
+  transition: all 0.3s ease;
+}
+
+.home:hover {
+  background-color: rgba(0, 0, 0, 1.6); /* dark overlay */
+  border-color: #666;                  /* lighter border on hover */
+}
+
 /* Sidebar with camera and emotion */
 .sidebar {
   display: flex;

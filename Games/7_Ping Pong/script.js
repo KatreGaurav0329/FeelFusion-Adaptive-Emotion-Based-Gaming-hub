@@ -6,25 +6,32 @@ const colorInfo = document.getElementById('colorInfo');
 // Define emotion-color mappings based on research
 const emotionColors = {
   happy: { 
-    color: '#1dadd5ff'
+    color: '#1dadd5ff', // Gold/Yellow
+    name: 'Golden Yellow (Joy)'
   },
   sad: { 
-    color: '#4682B4'
+    color: '#4682B4', // Steel Blue
+    name: 'Steel Blue (Sadness)'
   },
   angry: { 
-    color: '#7818b8ff'
+    color: '#7818b8ff', // Crimson Red
+    name: 'Crimson Red (Anger)'
   },
   surprised: { 
-    color: '#9370DB'
+    color: '#9370DB', // Medium Purple
+    name: 'Medium Purple (Surprise)'
   },
   fearful: { 
-    color: '#483D8B'
+    color: '#483D8B', // Dark Slate Blue
+    name: 'Dark Purple (Fear)'
   },
   disgusted: { 
-    color: '#1e3261ff'
+    color: '#1e3261ff', // Olive Green
+    name: 'Olive Green (Disgust)'
   },
   neutral: { 
-    color: '#515fb7ff'
+    color: '#515fb7ff', // Light Gray
+    name: 'Light Gray (Neutral)'
   }
 };
 
